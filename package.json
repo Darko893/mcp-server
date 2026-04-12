@@ -1,0 +1,27 @@
+{
+  "name": "@hauntapi/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Haunt API - extract clean data from any URL",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "haunt-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mcp",
+    "web-scraping",
+    "data-extraction",
+    "api",
+    "cloudflare-bypass"
+  ],
+  "author": "Haunt API",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hauntapi/mcp-server"
+  },
+  "dependencies": {}
+}
