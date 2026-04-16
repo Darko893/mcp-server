@@ -1,0 +1,29 @@
+{
+  "name": "@hauntapi/mcp-server",
+  "description": "Extract clean, structured data from any URL — directly from Claude, Cursor, or any MCP-compatible AI. Handles JavaScript rendering and Cloudflare bypass automatically.",
+  "url": "https://github.com/Darko893/mcp-server",
+  "npm": "https://www.npmjs.com/package/@hauntapi/mcp-server",
+  "website": "https://hauntapi.com",
+  "docs": "https://hauntapi.com/docs",
+  "categories": ["web-scraping", "browser-automation", "data-platforms"],
+  "tools": [
+    {
+      "name": "extract_url",
+      "description": "Extract clean, structured data from any URL. Handles JavaScript rendering and Cloudflare bypass automatically."
+    },
+    {
+      "name": "extract_batch",
+      "description": "Extract from multiple URLs at once (up to 10). Returns structured data for each URL."
+    },
+    {
+      "name": "extract_metadata",
+      "description": "Pull metadata: title, description, Open Graph tags, Twitter cards, canonical URL."
+    }
+  ],
+  "pricing": {
+    "free": "100 requests/month",
+    "pro": "$0.01/request"
+  },
+  "transport": "stdio",
+  "runtime": "node"
+}
