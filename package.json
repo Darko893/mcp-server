@@ -1,6 +1,6 @@
 {
   "name": "@hauntapi/mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Haunt API - extract clean data from any URL",
   "main": "index.js",
   "type": "module",
