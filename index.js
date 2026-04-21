@@ -47,27 +47,33 @@ async function hauntExtract(url, prompt) {
   return resp.json();
 }
 
-// Tool definitions
+// Tool definitions — descriptions optimized for Glama TDQS scoring
 const TOOLS = [
   {
     name: "extract_url",
     description:
-      "Extract clean, structured data from any URL. Returns JSON with the data you asked for. " +
-      "Handles JavaScript rendering and Cloudflare-protected sites automatically. " +
-      "You must describe what data you want in the prompt parameter.",
+      "Extract structured data from any web page by providing a URL and describing what you want. " +
+      "Returns clean JSON with exactly the fields you asked for — no HTML parsing needed. " +
+      "Handles JavaScript-rendered pages and Cloudflare-protected sites automatically. " +
+      "This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags instead — they're optimised shortcuts. " +
+      "Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
+      "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
     inputSchema: {
       type: "object",
       properties: {
         url: {
           type: "string",
           format: "uri",
-          description: "The URL to extract data from",
+          description:
+            "The full URL of the page to extract data from. Must be a valid HTTP or HTTPS URL. " +
+            "Supports any public web page including JavaScript-heavy SPAs and Cloudflare-protected sites.",
         },
         prompt: {
           type: "string",
           description:
-            'What data to extract, in plain English. E.g. "product price and title", ' +
-            '"full article body and author", "all contact information", "meta description and OG tags"',
+            "A plain-English description of what data to extract from the page. Be specific about which fields you want. " +
+            "Examples: 'product name, price, and availability', 'all email addresses and phone numbers', " +
+            "'the main heading, first paragraph, and all image URLs'. The more specific, the more accurate the extraction.",
         },
       },
       required: ["url", "prompt"],
@@ -76,14 +82,20 @@ const TOOLS = [
   {
     name: "extract_article",
     description:
-      "Extract the main article content from a URL: title, body text, author, and publish date.",
+      "Extract the main article content from a news article, blog post, or editorial page. " +
+      "Returns a JSON object with: title (string), body (string — full article text), author (string or null), and published_date (string or null). " +
+      "Use this instead of extract_url when you specifically need article content — it's a focused shortcut that guarantees consistent article fields. " +
+      "Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
+      "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
     inputSchema: {
       type: "object",
       properties: {
         url: {
           type: "string",
           format: "uri",
-          description: "The article URL to extract",
+          description:
+            "The URL of the article or blog post to extract. Must be a valid HTTP or HTTPS URL. " +
+            "Works best on news articles, blog posts, and editorial content. For non-article pages, use extract_url instead.",
         },
       },
       required: ["url"],
@@ -92,14 +104,21 @@ const TOOLS = [
   {
     name: "extract_metadata",
     description:
-      "Extract metadata from a URL: title, description, Open Graph tags, Twitter cards, canonical URL.",
+      "Extract page metadata from any URL: title, meta description, Open Graph tags (og:title, og:description, og:image, og:url), " +
+      "Twitter Card tags, canonical URL, and any other meta information present. " +
+      "Returns a JSON object with all discovered meta tags grouped by type. " +
+      "Use this instead of extract_url when you only need metadata — it's faster and returns a consistent schema. " +
+      "Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
+      "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
     inputSchema: {
       type: "object",
       properties: {
         url: {
           type: "string",
           format: "uri",
-          description: "The URL to extract metadata from",
+          description:
+            "The URL to extract metadata from. Must be a valid HTTP or HTTPS URL. " +
+            "Any public web page works — returns whatever meta tags are present in the HTML head.",
         },
       },
       required: ["url"],
@@ -183,7 +202,7 @@ async function handleRequest(request) {
         capabilities: { tools: {} },
         serverInfo: {
           name: "haunt-api",
-          version: "1.0.0",
+          version: "1.1.0",
         },
       },
     });
