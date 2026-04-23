@@ -1,7 +1,7 @@
 {
   "name": "@hauntapi/mcp-server",
-  "version": "1.0.1",
-  "description": "MCP server for Haunt API - extract clean data from any URL",
+  "version": "1.0.2",
+  "description": "MCP web extraction for Claude and Cursor: turn any URL into structured JSON with Haunt API",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -12,10 +12,18 @@
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "ai-agent",
     "web-scraping",
+    "web-extraction",
     "data-extraction",
-    "api",
-    "cloudflare-bypass"
+    "structured-data",
+    "browser-automation",
+    "cloudflare-bypass",
+    "scraper-api",
+    "json-extraction"
   ],
   "author": "Haunt API",
   "license": "MIT",
@@ -23,5 +31,9 @@
     "type": "git",
     "url": "https://github.com/Darko893/mcp-server"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "homepage": "https://hauntapi.com",
+  "bugs": {
+    "url": "https://github.com/Darko893/mcp-server/issues"
+  }
 }
