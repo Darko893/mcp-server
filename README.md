@@ -1,5 +1,7 @@
 # Haunt API MCP Server
 
+This is the canonical public MCP package working tree for `@hauntapi/mcp-server` and GitHub `Darko893/mcp-server`. The live Haunt API app/site lives separately in `/root/haunt`. Do not confuse this with `/root/haunt/mcp-server`, which is a legacy/local copy inside the app repo.
+
 Give Claude, Cursor, Windsurf, and other MCP-compatible agents a clean web extraction tool.
 
 Haunt turns messy public web pages into structured JSON using natural-language prompts. It is built for agent workflows that need product data, competitor pricing, article content, metadata, lead lists, research snippets, or any other web data without maintaining brittle selectors.
