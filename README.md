@@ -61,7 +61,7 @@ Extract page metadata including title, description, Open Graph tags, Twitter Car
 
 - Natural-language prompts instead of fragile CSS selectors
 - Browser rendering for JavaScript-heavy pages
-- Cloudflare/anti-bot handling via the Haunt API backend
+- CAPTCHA-aware extraction with machine-readable verification signals (`error_code`, `captcha_provider`, `requires_human_verification`)
 - Clean JSON output for agents, databases, and workflows
 - Free tier for testing
 
