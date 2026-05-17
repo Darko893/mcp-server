@@ -70,9 +70,9 @@ Extract page metadata including title, description, Open Graph tags, Twitter Car
 | Plan | Requests | Price |
 |------|----------|-------|
 | Free | 100/mo | £0 |
-| Starter | 1,000/mo | £19/mo |
-| Pro | 5,000/mo | £49/mo |
-| Scale | 15,000/mo | £99/mo |
+| Starter | 5,000/mo | £19/mo |
+| Pro | 25,000/mo | £49/mo |
+| Scale | 75,000/mo | £99/mo |
 
 Upgrade: https://hauntapi.com/#pricing
 
