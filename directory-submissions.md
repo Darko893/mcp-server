@@ -27,13 +27,13 @@
 
 | # | Repo | PR | Status | Notes |
 |---|------|-----|--------|-------|
-| 1 | punkpeye/awesome-mcp-servers | [#4552](https://github.com/punkpeye/awesome-mcp-servers/pull/4552) | open | Web extraction with Cloudflare bypass. 84k star directory. |
+| 1 | punkpeye/awesome-mcp-servers | [#4552](https://github.com/punkpeye/awesome-mcp-servers/pull/4552) | open | Web extraction with JavaScript-aware fetch paths and clean failure signals. 84k star directory. |
 | 2 | punkpeye/awesome-mcp-servers | [#4673](https://github.com/punkpeye/awesome-mcp-servers/pull/4673) | closed | Resubmitted as "Web Extraction for AI Agents" |
 | 3 | TensorBlock/awesome-mcp-servers | [#387](https://github.com/TensorBlock/awesome-mcp-servers/pull/387) | closed | "AI web scraping" |
 | 4 | TensorBlock/awesome-mcp-servers | [#395](https://github.com/TensorBlock/awesome-mcp-servers/pull/395) | closed | Resubmitted with better description + docs entry |
 | 5 | MobinX/awesome-mcp-list | [#217](https://github.com/MobinX/awesome-mcp-list/pull/217) | open | |
 | 6 | YuzeHao2023/Awesome-MCP-Servers | [#182](https://github.com/YuzeHao2023/Awesome-MCP-Servers/pull/182) | open | Haunt API MCP server |
-| 7 | YuzeHao2023/Awesome-MCP-Servers | [#188](https://github.com/YuzeHao2023/Awesome-MCP-Servers/pull/188) | open | Haunt MCP Server with Cloudflare bypass |
+| 7 | YuzeHao2023/Awesome-MCP-Servers | [#188](https://github.com/YuzeHao2023/Awesome-MCP-Servers/pull/188) | open | Haunt MCP Server with structured URL-to-JSON extraction |
 | 8 | toolsdk-ai/toolsdk-mcp-registry | [#284](https://github.com/toolsdk-ai/toolsdk-mcp-registry/pull/284) | open | |
 | 9 | Darko893/awesome-mcp-servers-1 | [#1](https://github.com/Darko893/awesome-mcp-servers-1/pull/1) | open | Fork/own repo listing |
 
@@ -100,7 +100,7 @@
 | appcypher/awesome-mcp-servers | Major list, Haunt not on it |
 | PulseMCP | API-gated, need to contact hello@pulsemcp.com |
 | Smithery | Needs public HTTPS MCP endpoint (we run local) |
-| SaaSHub | Cloudflare-protected, needs account |
+| SaaSHub | challenge-protected, needs account |
 | AlternativeTo | Needs account |
 | BetaList | Needs account |
 | Futurepedia | AI tools directory |
@@ -151,8 +151,8 @@
 | punkpeye/awesome-mcp-devtools (443★) | DevTools focused, possible fit for SDK/libraries |
 | rohitg00/awesome-devops-mcp-servers (980★) | DevOps MCP servers — might fit if positioned as infra tool |
 | soxoj/awesome-osint-mcp-servers (206★) | OSINT focused, possible fit for web data extraction |
-| Smithery | Behind Cloudflare, needs public HTTPS MCP endpoint |
-| SaaSHub | Cloudflare-protected, needs account |
+| Smithery | behind bot challenge, needs public HTTPS MCP endpoint |
+| SaaSHub | challenge-protected, needs account |
 | AlternativeTo | Needs account |
 | Futurepedia | AI tools directory |
 | TopAI.tools | AI tools directory |

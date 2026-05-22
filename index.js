@@ -3,10 +3,10 @@
 /**
  * Haunt API MCP Server
  * 
- * Extract clean structured data from any URL using Haunt API.
+ * Extract clean structured data from public or authorised URLs using Haunt API.
  * Works with Claude Desktop, Cursor, Windsurf, and any MCP-compatible client.
  * 
- * Setup — add to your MCP client config:
+ * Setup: add to your MCP client config:
  * {
  *   "mcpServers": {
  *     "haunt": {
@@ -59,7 +59,7 @@ async function hauntExtract(url, prompt) {
   return resp.json();
 }
 
-// Tool definitions — descriptions optimized for Glama TDQS scoring
+// Tool definitions, descriptions optimized for agent marketplaces
 const TOOLS = [
   {
     name: "try_demo_extract",
@@ -76,11 +76,11 @@ const TOOLS = [
   {
     name: "extract_url",
     description:
-      "Extract structured data from any web page by providing a URL and describing what you want. " +
-      "Returns clean JSON with exactly the fields you asked for — no HTML parsing needed. " +
-      "Handles JavaScript-rendered pages and Cloudflare-protected sites automatically. " +
-      "This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags instead — they're optimised shortcuts. " +
-      "Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
+      "Extract structured data from public or authorised web pages by providing a URL and describing what you want. " +
+      "Returns clean JSON with exactly the fields you asked for, no HTML parsing needed. " +
+      "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. " +
+      "This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags instead, they are optimised shortcuts. " +
+      "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
       "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
     inputSchema: {
       type: "object",
@@ -90,7 +90,7 @@ const TOOLS = [
           format: "uri",
           description:
             "The full URL of the page to extract data from. Must be a valid HTTP or HTTPS URL. " +
-            "Supports any public web page including JavaScript-heavy SPAs and Cloudflare-protected sites.",
+            "Supports public or authorised pages, including many JavaScript-heavy SPAs. Human-verification and blocked pages return explicit errors.",
         },
         prompt: {
           type: "string",
@@ -107,9 +107,9 @@ const TOOLS = [
     name: "extract_article",
     description:
       "Extract the main article content from a news article, blog post, or editorial page. " +
-      "Returns a JSON object with: title (string), body (string — full article text), author (string or null), and published_date (string or null). " +
-      "Use this instead of extract_url when you specifically need article content — it's a focused shortcut that guarantees consistent article fields. " +
-      "Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
+      "Returns a JSON object with: title (string), body (string, full article text), author (string or null), and published_date (string or null). " +
+      "Use this instead of extract_url when you specifically need article content, it is a focused shortcut with consistent article fields. " +
+      "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
       "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
     inputSchema: {
       type: "object",
@@ -128,11 +128,11 @@ const TOOLS = [
   {
     name: "extract_metadata",
     description:
-      "Extract page metadata from any URL: title, meta description, Open Graph tags (og:title, og:description, og:image, og:url), " +
+      "Extract page metadata from a public or authorised URL: title, meta description, Open Graph tags (og:title, og:description, og:image, og:url), " +
       "Twitter Card tags, canonical URL, and any other meta information present. " +
       "Returns a JSON object with all discovered meta tags grouped by type. " +
-      "Use this instead of extract_url when you only need metadata — it's faster and returns a consistent schema. " +
-      "Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
+      "Use this instead of extract_url when you only need metadata, it is faster and returns a consistent schema. " +
+      "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
       "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
     inputSchema: {
       type: "object",
@@ -142,7 +142,7 @@ const TOOLS = [
           format: "uri",
           description:
             "The URL to extract metadata from. Must be a valid HTTP or HTTPS URL. " +
-            "Any public web page works — returns whatever meta tags are present in the HTML head.",
+            "Public or authorised pages are supported, returns whatever meta tags are present in the HTML head.",
         },
       },
       required: ["url"],
