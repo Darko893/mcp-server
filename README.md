@@ -8,6 +8,16 @@ Haunt turns messy public web pages into structured JSON using natural-language p
 
 ## Quick Start
 
+### 1. Prove the package is wired in, no key needed
+
+Install the MCP server and call `try_demo_extract` first. It returns the demo, docs, signup, pricing, and free-tier links without using quota.
+
+```text
+Use Haunt's try_demo_extract tool and show me the signup and docs links.
+```
+
+### 2. Add a free API key for live extraction
+
 Get a free API key: https://hauntapi.com/#signup
 
 Add this to your MCP client config:
@@ -33,6 +43,10 @@ Use Haunt to extract the product name, price, availability, and review count fro
 ```
 
 ## Tools
+
+### `try_demo_extract`
+
+No-key activation check. Returns Haunt's demo endpoint, docs, signup, pricing, MCP info route, and free-tier details. Use this first when a user has installed the MCP server but has not added `HAUNT_API_KEY` yet.
 
 ### `extract_url`
 

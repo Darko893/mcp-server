@@ -17,21 +17,33 @@
  *   }
  * }
  * 
- * Free tier: 100 requests/month at https://hauntapi.com
- * Pro: $0.01/request — pay only for what you use
+ * Free tier: 100 successful requests/month at https://hauntapi.com/#signup
+ * Plans: Starter £19/5k, Pro £49/25k, Scale £99/75k successful requests
  */
 
 import { stdin, stdout } from "node:process";
 
 const API_BASE = "https://hauntapi.com/v1";
 const API_KEY = process.env.HAUNT_API_KEY || "";
+const ACTIVATION = {
+  demo_url: "https://hauntapi.com/v1/demo/extract",
+  docs_url: "https://hauntapi.com/docs",
+  signup_url: "https://hauntapi.com/#signup",
+  pricing_url: "https://hauntapi.com/#pricing",
+  mcp_info_url: "https://hauntapi.com/mcp/",
+  free_tier: "100 successful requests/month",
+};
 
 // Haunt API call
 async function hauntExtract(url, prompt) {
-  const headers = { "Content-Type": "application/json" };
-  if (API_KEY) {
-    headers["X-API-Key"] = API_KEY;
+  if (!API_KEY) {
+    throw new Error(
+      `Missing HAUNT_API_KEY. Try the no-key try_demo_extract tool first, then get a free key at ${ACTIVATION.signup_url}. Free tier: ${ACTIVATION.free_tier}.`
+    );
   }
+
+  const headers = { "Content-Type": "application/json" };
+  headers["X-API-Key"] = API_KEY;
 
   const resp = await fetch(`${API_BASE}/extract`, {
     method: "POST",
@@ -49,6 +61,18 @@ async function hauntExtract(url, prompt) {
 
 // Tool definitions — descriptions optimized for Glama TDQS scoring
 const TOOLS = [
+  {
+    name: "try_demo_extract",
+    description:
+      "Try Haunt's fixed demo extraction without an API key. " +
+      "Use this first when the user wants to verify the MCP package or see the activation path before signup. " +
+      "Returns demo, docs, signup, pricing, and free-tier links. No API key required. Free tier: 100 successful requests/month.",
+    inputSchema: {
+      type: "object",
+      properties: {},
+      additionalProperties: false,
+    },
+  },
   {
     name: "extract_url",
     description:
@@ -129,6 +153,25 @@ const TOOLS = [
 // Handle tool calls
 async function handleToolCall(name, args) {
   switch (name) {
+    case "try_demo_extract": {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                ...ACTIVATION,
+                message: "Haunt's MCP package is installed. Use extract_url, extract_article, or extract_metadata with HAUNT_API_KEY for live extraction.",
+                example_prompt:
+                  "Use Haunt to extract product name, price, availability, and review count from a public product page.",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
     case "extract_url": {
       const result = await hauntExtract(args.url, args.prompt);
       return {
@@ -161,34 +204,42 @@ async function handleToolCall(name, args) {
 // MCP protocol handler (stdio transport)
 let buffer = "";
 
-stdin.on("data", (chunk) => {
-  buffer += chunk.toString();
+export { TOOLS, handleToolCall };
 
-  while (true) {
-    const headerEnd = buffer.indexOf("\r\n\r\n");
-    if (headerEnd === -1) break;
+function startServer() {
+  stdin.on("data", (chunk) => {
+    buffer += chunk.toString();
 
-    const header = buffer.slice(0, headerEnd);
-    const match = header.match(/Content-Length: (\d+)/);
-    if (!match) break;
+    while (true) {
+      const headerEnd = buffer.indexOf("\r\n\r\n");
+      if (headerEnd === -1) break;
 
-    const length = parseInt(match[1]);
-    const messageStart = headerEnd + 4;
-    const messageEnd = messageStart + length;
+      const header = buffer.slice(0, headerEnd);
+      const match = header.match(/Content-Length: (\d+)/);
+      if (!match) break;
 
-    if (buffer.length < messageEnd) break;
+      const length = parseInt(match[1]);
+      const messageStart = headerEnd + 4;
+      const messageEnd = messageStart + length;
 
-    const message = buffer.slice(messageStart, messageEnd);
-    buffer = buffer.slice(messageEnd);
+      if (buffer.length < messageEnd) break;
 
-    try {
-      const request = JSON.parse(message);
-      handleRequest(request);
-    } catch (e) {
-      // ignore parse errors
+      const message = buffer.slice(messageStart, messageEnd);
+      buffer = buffer.slice(messageEnd);
+
+      try {
+        const request = JSON.parse(message);
+        handleRequest(request);
+      } catch (e) {
+        // ignore parse errors
+      }
     }
-  }
-});
+  });
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  startServer();
+}
 
 async function handleRequest(request) {
   const { id, method, params } = request;
