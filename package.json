@@ -1,6 +1,6 @@
 {
   "name": "@hauntapi/mcp-server",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "mcpName": "io.github.Darko893/mcp-server",
   "description": "MCP web extraction for Claude, Cursor, and agents: no-key demo plus live URL-to-JSON extraction with Haunt API",
   "main": "index.js",
