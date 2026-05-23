@@ -4,7 +4,7 @@ This is the canonical public MCP package working tree for `@hauntapi/mcp-server`
 
 Give Claude, Cursor, Windsurf, and other MCP-compatible agents a clean web extraction tool.
 
-Haunt turns public or authorised web pages into structured JSON using natural-language prompts. It is built for agent workflows that need product data, competitor pricing, article content, metadata, lead lists, research snippets, or other visible web data without maintaining brittle selectors.
+Haunt turns permitted public web pages into structured JSON using natural-language prompts. It is built for agent workflows that need product data, competitor pricing, article content, metadata, lead lists, research snippets, or other visible web data without maintaining brittle selectors.
 
 ## Quick Start
 
@@ -50,7 +50,7 @@ No-key activation check. Returns Haunt's demo endpoint, docs, signup, pricing, M
 
 ### `extract_url`
 
-General-purpose extraction from public or authorised web pages.
+General-purpose extraction from permitted public web pages.
 
 Use it for:
 
@@ -59,7 +59,7 @@ Use it for:
 - Directories and lead lists
 - Job boards
 - Research pages
-- Supported public or authorised pages where you want clean JSON instead of HTML
+- Supported permitted public pages where you want clean JSON instead of HTML
 
 ### `extract_article`
 

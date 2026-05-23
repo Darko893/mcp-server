@@ -3,7 +3,7 @@
 /**
  * Haunt API MCP Server
  * 
- * Extract clean structured data from public or authorised URLs using Haunt API.
+ * Extract clean structured data from permitted public URLs using Haunt API.
  * Works with Claude Desktop, Cursor, Windsurf, and any MCP-compatible client.
  * 
  * Setup: add to your MCP client config:
@@ -76,7 +76,7 @@ const TOOLS = [
   {
     name: "extract_url",
     description:
-      "Extract structured data from public or authorised web pages by providing a URL and describing what you want. " +
+      "Extract structured data from permitted public web pages by providing a URL and describing what you want. " +
       "Returns clean JSON with exactly the fields you asked for, no HTML parsing needed. " +
       "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. " +
       "This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags instead, they are optimised shortcuts. " +
@@ -90,7 +90,7 @@ const TOOLS = [
           format: "uri",
           description:
             "The full URL of the page to extract data from. Must be a valid HTTP or HTTPS URL. " +
-            "Supports public or authorised pages, including many JavaScript-heavy SPAs. Human-verification and blocked pages return explicit errors.",
+            "Supports permitted public pages, including many JavaScript-heavy SPAs. Human-verification and blocked pages return explicit errors.",
         },
         prompt: {
           type: "string",
@@ -142,7 +142,7 @@ const TOOLS = [
           format: "uri",
           description:
             "The URL to extract metadata from. Must be a valid HTTP or HTTPS URL. " +
-            "Public or authorised pages are supported, returns whatever meta tags are present in the HTML head.",
+            "Permitted public pages are supported, returns whatever meta tags are present in the HTML head.",
         },
       },
       required: ["url"],
