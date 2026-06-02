@@ -1,7 +1,7 @@
 {
   "name": "haunt-mcp-server",
   "version": "1.0.0",
-  "description": "Haunt API — Web Extraction MCP Server",
+  "description": "Haunt API MCP server for permitted public-page extraction with honest blocked-page errors",
   "license": "MIT",
   "main": "index.js",
   "private": true,

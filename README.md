@@ -1,10 +1,19 @@
 # Haunt API MCP Server
 
-Extract clean, structured data from any URL — directly from Claude, Cursor, Windsurf, or any MCP-compatible AI.
+> Current package note
+>
+> Use the current public NPM package `@hauntapi/mcp-server` and canonical repo: https://github.com/Darko893/mcp-server.
+> This repository remains public because old MCP directories, including Glama, may still index it.
+
+Haunt turns permitted public web pages into structured JSON for Claude, Cursor, Windsurf, and other MCP-compatible agents.
+
+## Capability boundaries
+
+Haunt does **not** promise universal extraction, Cloudflare bypass, CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention. It works best on permitted public pages and supported rendered pages. When a page is blocked, login-required, CAPTCHA-gated, or too thin to verify, Haunt should return a clear failure signal instead of fabricated data.
 
 ## Quick Start
 
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
+For new installs, use the current package:
 
 ```json
 {
@@ -20,42 +29,48 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-Get a free API key at [hauntapi.com](https://hauntapi.com) — 100 requests/month, no credit card needed.
+Get a free API key at [hauntapi.com](https://hauntapi.com/#signup). Free tier: 100 successful requests/month, no credit card needed.
 
 ## Tools
 
 ### `extract_url`
-Extract structured data from any web page. Provide a URL and a plain-English prompt describing what you want. Handles JavaScript rendering and Cloudflare bypass automatically.
 
-```
+Extract structured data from permitted public web pages. Provide a URL and a plain-English prompt describing what you want. Supported JavaScript-rendered pages can work, but blocked, CAPTCHA-gated, login-required, paywalled, or restricted pages should return explicit errors rather than guessed data.
+
+```text
 Extract the product name, price, and availability from https://example.com/product
 ```
 
 ### `extract_article`
-Extract the main article content from a news article or blog post. Returns title, body text, author, and publish date.
 
-```
+Extract article fields from news, blog, and editorial pages. Returns title, body text, author, and publish date when available.
+
+```text
 Extract the article content from https://example.com/blog/post
 ```
 
 ### `extract_metadata`
-Pull metadata from any URL: title, description, Open Graph tags, Twitter cards, canonical URL.
 
-```
+Pull metadata from permitted public URLs: title, description, Open Graph tags, Twitter cards, and canonical URL.
+
+```text
 Get the Open Graph metadata for https://example.com
 ```
 
 ## Pricing
 
-| Plan | Requests | Price |
-|------|----------|-------|
+| Plan | Successful requests | Price |
+|------|---------------------|-------|
 | Free | 100/mo | £0 |
-| Starter | 1,000/mo | £19/mo |
-| Pro | 5,000/mo | £49/mo |
-| Scale | 15,000/mo | £99/mo |
+| Starter | 5,000/mo | £19/mo |
+| Pro | 25,000/mo | £49/mo |
+| Scale | 75,000/mo | £99/mo |
+
+Upgrade: https://hauntapi.com/#pricing
 
 ## Links
 
 - Website: https://hauntapi.com
 - API Docs: https://hauntapi.com/docs
 - Get API Key: https://hauntapi.com/#signup
+- Current repo: https://github.com/Darko893/mcp-server

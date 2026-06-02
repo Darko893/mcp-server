@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Haunt API — MCP Server
+ * Haunt API MCP Server
  *
- * Extract structured data from any URL via Haunt API.
+ * Extract structured data from permitted public URLs via Haunt API.
  * Works with Claude Desktop, Cursor, Windsurf, and any MCP client.
  *
  * This is a local stub for directory quality checks.
@@ -21,14 +21,14 @@ const server = new McpServer({
 
 server.tool(
   'extract_url',
-  'Extract structured data from any web page by providing a URL and describing what you want. ' +
-  'Returns clean JSON with exactly the fields you asked for — no HTML parsing needed. ' +
-  'Handles JavaScript-rendered pages and Cloudflare-protected sites automatically. ' +
-  'This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags — they are optimised shortcuts. ' +
-  'Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. ' +
+  'Extract structured data from permitted public web pages by providing a URL and describing what you want. ' +
+  'Returns clean JSON with exactly the fields you asked for, no HTML parsing needed. ' +
+  'Uses supported fetch paths for JavaScript-rendered pages, but does not promise Cloudflare/CAPTCHA/login-wall/paywall bypass or anti-bot circumvention. ' +
+  'This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags, they are optimised shortcuts. ' +
+  'Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. ' +
   'Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.',
   {
-    url: z.string().describe('The full URL of the page to extract data from. Must be a valid HTTP or HTTPS URL. Supports any public web page including JavaScript-heavy SPAs and Cloudflare-protected sites.'),
+    url: z.string().describe('The full URL of the page to extract data from. Must be a valid HTTP or HTTPS URL. Supports permitted public pages, including some JavaScript-heavy SPAs. Blocked, login-required, CAPTCHA-gated, paywalled, or restricted pages should return explicit errors rather than guessed data.'),
     prompt: z.string().describe('A plain-English description of what data to extract. Be specific about which fields you want. Examples: "product name, price, and availability", "all email addresses and phone numbers", "the main heading and first paragraph".'),
   },
   async () => ({
@@ -42,8 +42,8 @@ server.tool(
 server.tool(
   'extract_article',
   'Extract the main article content from a news article or blog post. Returns title, body text, author, and publish date as structured JSON. ' +
-  'Handles paywalled and JavaScript-rendered articles. Optimised for editorial content — use extract_url for product pages, listings, or generic data. ' +
-  'Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. ' +
+  'Works best on permitted public editorial content. JavaScript-rendered pages may work when supported; paywalled, login-required, CAPTCHA-gated, or blocked articles should return explicit errors. ' +
+  'Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. ' +
   'Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.',
   {
     url: z.string().describe('The full URL of the article or blog post to extract content from.'),
@@ -58,9 +58,9 @@ server.tool(
 
 server.tool(
   'extract_metadata',
-  'Pull metadata from any URL: title, description, Open Graph tags, Twitter cards, canonical URL. Returns structured JSON with all available meta information. ' +
+  'Pull metadata from a permitted public URL: title, description, Open Graph tags, Twitter cards, canonical URL. Returns structured JSON with all available meta information. ' +
   'Useful for link previews, SEO analysis, and content categorisation. Use extract_url for page body content or extract_article for full articles. ' +
-  'Read-only — makes no changes to any external system. Requires HAUNT_API_KEY environment variable. ' +
+  'Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. ' +
   'Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.',
   {
     url: z.string().describe('The full URL to extract metadata from.'),

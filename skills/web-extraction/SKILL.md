@@ -5,7 +5,7 @@ disable-model-invocation: false
 
 # Web Extraction with Haunt API
 
-You have access to the `web_extract` and `get_usage` tools via the Haunt MCP server. Use them to extract structured data from any URL.
+You have access to the `web_extract` and `get_usage` tools via the Haunt MCP server. Use them to extract structured data from permitted public URLs.
 
 ## When to use web_extract
 
@@ -16,7 +16,7 @@ You have access to the `web_extract` and `get_usage` tools via the Haunt MCP ser
 
 ## How to write effective extraction prompts
 
-Be specific about what you want. The tool accepts natural language — describe the data shape and fields.
+Be specific about what you want. The tool accepts natural language, describe the data shape and fields.
 
 Good prompts:
 - "Extract the product name, price, availability, and all variant options from this product page"
@@ -25,7 +25,7 @@ Good prompts:
 - "Get the company name, CEO, employee count, and funding stage from this About page"
 
 Bad prompts:
-- "Get everything" (too vague — you'll get an unstructured dump)
+- "Get everything" (too vague, you'll get an unstructured dump)
 - "Extract data" (what data? be specific)
 
 ## Authentication
@@ -35,7 +35,7 @@ Every call requires an `api_key` parameter. If the user hasn't provided one, dir
 ## Handling failures
 
 - If extraction returns partial data, try rephrasing the prompt with more specific field names
-- Some sites block automated access — the tool handles most Cloudflare and bot protection automatically, but occasionally a site will be unreachable
+- Some sites block automated access. Haunt does not promise Cloudflare/CAPTCHA/login-wall/paywall bypass or anti-bot circumvention; blocked pages should return explicit failure signals rather than guessed data
 - Always check the returned data for completeness before presenting it to the user
 
 ## Usage monitoring
