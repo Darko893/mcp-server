@@ -42,6 +42,11 @@ Then ask your agent:
 Use Haunt to extract the product name, price, availability, and review count from https://example.com/product
 ```
 
+
+## Capability boundaries
+
+Haunt does **not** promise universal extraction, Cloudflare bypass, CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention. It works best on permitted public pages and supported rendered pages. When a page is blocked, login-required, CAPTCHA-gated, or too thin to verify, Haunt should return a clear failure signal instead of fabricated data.
+
 ## Tools
 
 ### `try_demo_extract`
@@ -75,7 +80,7 @@ Extract page metadata including title, description, Open Graph tags, Twitter Car
 
 - Natural-language prompts instead of fragile CSS selectors
 - Supported fetch paths for JavaScript-heavy pages
-- CAPTCHA-aware extraction with machine-readable verification signals (`error_code`, `captcha_provider`, `requires_human_verification`)
+- Challenge-aware extraction with machine-readable verification signals (`error_code`, `captcha_provider`, `requires_human_verification`)
 - Clean JSON output for agents, databases, and workflows
 - Free tier for testing
 
