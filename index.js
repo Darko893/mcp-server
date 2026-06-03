@@ -17,8 +17,8 @@
  *   }
  * }
  * 
- * Free tier: 100 successful requests/month at https://hauntapi.com/#signup
- * Plans: Starter £19/5k, Pro £49/25k, Scale £99/75k successful requests
+ * Free tier: 1,000 credits/month at https://hauntapi.com/#signup
+ * Plans: Starter £19/10k credits, Pro £49/30k credits, Scale £99/80k credits
  */
 
 import { stdin, stdout } from "node:process";
@@ -31,7 +31,8 @@ const ACTIVATION = {
   signup_url: "https://hauntapi.com/#signup",
   pricing_url: "https://hauntapi.com/#pricing",
   mcp_info_url: "https://hauntapi.com/mcp/",
-  free_tier: "100 successful requests/month",
+  free_tier: "1,000 credits/month",
+  credit_model: "simple=1, normal_structured=2, browser_or_auth=4, heavy_or_screenshot=8, failed=0",
 };
 
 // Haunt API call
@@ -66,7 +67,7 @@ const TOOLS = [
     description:
       "Try Haunt's fixed demo extraction without an API key. " +
       "Use this first when the user wants to verify the MCP package or see the activation path before signup. " +
-      "Returns demo, docs, signup, pricing, and free-tier links. No API key required. Free tier: 100 successful requests/month.",
+      "Returns demo, docs, signup, pricing, and free-tier links. No API key required. Free tier: 1,000 credits/month.",
     inputSchema: {
       type: "object",
       properties: {},
@@ -81,7 +82,7 @@ const TOOLS = [
       "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. It does not promise Cloudflare/CAPTCHA/login-wall/paywall bypass or anti-bot circumvention. " +
       "This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags instead, they are optimised shortcuts. " +
       "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
-      "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
+      "Free tier: 1,000 credits/month. Returns an error if rate limit, credit quota, or API key is invalid.",
     inputSchema: {
       type: "object",
       properties: {
@@ -110,7 +111,7 @@ const TOOLS = [
       "Returns a JSON object with: title (string), body (string, full article text), author (string or null), and published_date (string or null). " +
       "Use this instead of extract_url when you specifically need article content, it is a focused shortcut with consistent article fields. " +
       "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
-      "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
+      "Free tier: 1,000 credits/month. Returns an error if rate limit, credit quota, or API key is invalid.",
     inputSchema: {
       type: "object",
       properties: {
@@ -133,7 +134,7 @@ const TOOLS = [
       "Returns a JSON object with all discovered meta tags grouped by type. " +
       "Use this instead of extract_url when you only need metadata, it is faster and returns a consistent schema. " +
       "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
-      "Free tier: 100 requests/month. Returns an error if rate limit or API key is invalid.",
+      "Free tier: 1,000 credits/month. Returns an error if rate limit, credit quota, or API key is invalid.",
     inputSchema: {
       type: "object",
       properties: {

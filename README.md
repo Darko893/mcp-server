@@ -10,7 +10,7 @@ Haunt turns permitted public web pages into structured JSON using natural-langua
 
 ### 1. Prove the package is wired in, no key needed
 
-Install the MCP server and call `try_demo_extract` first. It returns the demo, docs, signup, pricing, and free-tier links without using quota.
+Install the MCP server and call `try_demo_extract` first. It returns the demo, docs, signup, pricing, and free-tier links without using credits.
 
 ```text
 Use Haunt's try_demo_extract tool and show me the signup and docs links.
@@ -86,12 +86,14 @@ Extract page metadata including title, description, Open Graph tags, Twitter Car
 
 ## Pricing
 
-| Plan | Requests | Price |
-|------|----------|-------|
-| Free | 100/mo | £0 |
-| Starter | 5,000/mo | £19/mo |
-| Pro | 25,000/mo | £49/mo |
-| Scale | 75,000/mo | £99/mo |
+| Plan | Credits | Price |
+|------|---------|-------|
+| Free | 1,000/mo | £0 |
+| Starter | 10,000/mo | £19/mo |
+| Pro | 30,000/mo | £49/mo |
+| Scale | 80,000/mo | £99/mo |
+
+Credits are not one-to-one requests. Simple public/non-LLM output usually uses 1 credit, normal structured extraction 2, browser-rendered or authenticated extraction 4, and heavy/screenshot extraction 8. Failed, blocked, login/CAPTCHA, provider, and server failures do not burn credits.
 
 Upgrade: https://hauntapi.com/#pricing
 
