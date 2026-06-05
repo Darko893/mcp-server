@@ -151,55 +151,48 @@ const TOOLS = [
   },
 ];
 
+function textContent(payload) {
+  return { content: [{ type: "text", text: JSON.stringify(payload, null, 2) }] };
+}
+
+function demoToolResult() {
+  return textContent({
+    ...ACTIVATION,
+    message: "Haunt's MCP package is installed. Use extract_url, extract_article, or extract_metadata with HAUNT_API_KEY for live extraction.",
+    example_prompt: "Use Haunt to extract product name, price, availability, and review count from a public product page.",
+  });
+}
+
+async function extractUrlTool(args) {
+  return textContent(await hauntExtract(args.url, args.prompt));
+}
+
+async function extractArticleTool(args) {
+  return textContent(await hauntExtract(
+    args.url,
+    "Extract the full article content including title, body text, author name, and publication date"
+  ));
+}
+
+async function extractMetadataTool(args) {
+  return textContent(await hauntExtract(
+    args.url,
+    "Extract all metadata: page title, meta description, Open Graph tags (og:title, og:description, og:image, og:url), Twitter card tags, canonical URL, and any other meta information"
+  ));
+}
+
+const TOOL_HANDLERS = {
+  try_demo_extract: demoToolResult,
+  extract_url: extractUrlTool,
+  extract_article: extractArticleTool,
+  extract_metadata: extractMetadataTool,
+};
+
 // Handle tool calls
 async function handleToolCall(name, args) {
-  switch (name) {
-    case "try_demo_extract": {
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              {
-                ...ACTIVATION,
-                message: "Haunt's MCP package is installed. Use extract_url, extract_article, or extract_metadata with HAUNT_API_KEY for live extraction.",
-                example_prompt:
-                  "Use Haunt to extract product name, price, availability, and review count from a public product page.",
-              },
-              null,
-              2
-            ),
-          },
-        ],
-      };
-    }
-    case "extract_url": {
-      const result = await hauntExtract(args.url, args.prompt);
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-      };
-    }
-    case "extract_article": {
-      const result = await hauntExtract(
-        args.url,
-        "Extract the full article content including title, body text, author name, and publication date"
-      );
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-      };
-    }
-    case "extract_metadata": {
-      const result = await hauntExtract(
-        args.url,
-        "Extract all metadata: page title, meta description, Open Graph tags (og:title, og:description, og:image, og:url), Twitter card tags, canonical URL, and any other meta information"
-      );
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-      };
-    }
-    default:
-      throw new Error(`Unknown tool: ${name}`);
-  }
+  const handler = TOOL_HANDLERS[name];
+  if (!handler) throw new Error(`Unknown tool: ${name}`);
+  return handler(args);
 }
 
 // MCP protocol handler (stdio transport)
@@ -207,34 +200,36 @@ let buffer = "";
 
 export { TOOLS, handleToolCall };
 
+function nextBufferedMessage() {
+  const headerEnd = buffer.indexOf("\r\n\r\n");
+  if (headerEnd === -1) return null;
+  const header = buffer.slice(0, headerEnd);
+  const match = header.match(/Content-Length: (\d+)/);
+  if (!match) return null;
+  const messageStart = headerEnd + 4;
+  const messageEnd = messageStart + parseInt(match[1]);
+  if (buffer.length < messageEnd) return null;
+  const message = buffer.slice(messageStart, messageEnd);
+  buffer = buffer.slice(messageEnd);
+  return message;
+}
+
+function processBufferedMessages() {
+  let message = nextBufferedMessage();
+  while (message) {
+    try {
+      handleRequest(JSON.parse(message));
+    } catch (e) {
+      // ignore parse errors
+    }
+    message = nextBufferedMessage();
+  }
+}
+
 function startServer() {
   stdin.on("data", (chunk) => {
     buffer += chunk.toString();
-
-    while (true) {
-      const headerEnd = buffer.indexOf("\r\n\r\n");
-      if (headerEnd === -1) break;
-
-      const header = buffer.slice(0, headerEnd);
-      const match = header.match(/Content-Length: (\d+)/);
-      if (!match) break;
-
-      const length = parseInt(match[1]);
-      const messageStart = headerEnd + 4;
-      const messageEnd = messageStart + length;
-
-      if (buffer.length < messageEnd) break;
-
-      const message = buffer.slice(messageStart, messageEnd);
-      buffer = buffer.slice(messageEnd);
-
-      try {
-        const request = JSON.parse(message);
-        handleRequest(request);
-      } catch (e) {
-        // ignore parse errors
-      }
-    }
+    processBufferedMessages();
   });
 }
 
@@ -242,54 +237,45 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   startServer();
 }
 
-async function handleRequest(request) {
-  const { id, method, params } = request;
-
-  if (method === "initialize") {
-    send({
-      jsonrpc: "2.0",
-      id,
-      result: {
-        protocolVersion: "2024-11-05",
-        capabilities: { tools: {} },
-        serverInfo: {
-          name: "haunt-api",
-          version: "1.1.0",
-        },
-      },
-    });
-    return;
-  }
-
-  if (method === "notifications/initialized") return;
-
-  if (method === "tools/list") {
-    send({ jsonrpc: "2.0", id, result: { tools: TOOLS } });
-    return;
-  }
-
-  if (method === "tools/call") {
-    try {
-      const result = await handleToolCall(params.name, params.arguments || {});
-      send({ jsonrpc: "2.0", id, result });
-    } catch (e) {
-      send({
-        jsonrpc: "2.0",
-        id,
-        result: {
-          content: [{ type: "text", text: `Error: ${e.message}` }],
-          isError: true,
-        },
-      });
-    }
-    return;
-  }
-
+function initializeResult(id) {
   send({
     jsonrpc: "2.0",
     id,
-    error: { code: -32601, message: `Method not found: ${method}` },
+    result: {
+      protocolVersion: "2024-11-05",
+      capabilities: { tools: {} },
+      serverInfo: { name: "haunt-api", version: "1.1.0" },
+    },
   });
+}
+
+function listToolsResult(id) {
+  send({ jsonrpc: "2.0", id, result: { tools: TOOLS } });
+}
+
+async function callToolResult({ id, params }) {
+  try {
+    const result = await handleToolCall(params.name, params.arguments || {});
+    send({ jsonrpc: "2.0", id, result });
+  } catch (e) {
+    send({ jsonrpc: "2.0", id, result: { content: [{ type: "text", text: `Error: ${e.message}` }], isError: true } });
+  }
+}
+
+const REQUEST_HANDLERS = {
+  initialize: ({ id }) => initializeResult(id),
+  "notifications/initialized": () => {},
+  "tools/list": ({ id }) => listToolsResult(id),
+  "tools/call": callToolResult,
+};
+
+async function handleRequest(request) {
+  const handler = REQUEST_HANDLERS[request.method];
+  if (handler) {
+    await handler(request);
+    return;
+  }
+  send({ jsonrpc: "2.0", id: request.id, error: { code: -32601, message: `Method not found: ${request.method}` } });
 }
 
 function send(msg) {
