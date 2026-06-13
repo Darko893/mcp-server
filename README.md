@@ -13,13 +13,13 @@ Haunt turns permitted public web pages into structured JSON using natural-langua
 For the clean CLI path, run:
 
 ```bash
-npx -y @hauntapi/haunt-cli@latest init
+npx -y @hauntapi/cli@latest init
 ```
 
 If you already have a Haunt API key:
 
 ```bash
-HAUNT_API_KEY=PASTE_YOUR_KEY_HERE npx -y @hauntapi/haunt-cli@latest init
+HAUNT_API_KEY=PASTE_YOUR_KEY_HERE npx -y @hauntapi/cli@latest init
 ```
 
 The CLI prints the MCP config for Claude, Cursor, Windsurf, and other MCP-compatible clients. It does not edit config files for you.

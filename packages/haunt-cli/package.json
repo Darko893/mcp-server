@@ -1,5 +1,5 @@
 {
-  "name": "@hauntapi/haunt-cli",
+  "name": "@hauntapi/cli",
   "version": "1.0.0",
   "description": "One-command Haunt API setup for agents and MCP clients",
   "type": "module",
