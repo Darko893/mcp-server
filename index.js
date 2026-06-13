@@ -21,7 +21,9 @@
  * Plans: Starter £19/10k credits, Pro £49/30k credits, Scale £99/80k credits
  */
 
+import { realpathSync } from "node:fs";
 import { stdin, stdout } from "node:process";
+import { pathToFileURL } from "node:url";
 
 const API_BASE = "https://hauntapi.com/v1";
 const API_KEY = process.env.HAUNT_API_KEY || "";
@@ -233,7 +235,15 @@ function startServer() {
   });
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+function isMainModule() {
+  try {
+    return Boolean(process.argv[1]) && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href;
+  } catch {
+    return false;
+  }
+}
+
+if (isMainModule()) {
   startServer();
 }
 
@@ -244,7 +254,7 @@ function initializeResult(id) {
     result: {
       protocolVersion: "2024-11-05",
       capabilities: { tools: {} },
-      serverInfo: { name: "haunt-api", version: "1.1.0" },
+      serverInfo: { name: "haunt-api", version: "1.0.6" },
     },
   });
 }

@@ -1,0 +1,43 @@
+{
+  "name": "haunt-cli",
+  "version": "1.0.0",
+  "description": "One-command Haunt API setup for agents and MCP clients",
+  "type": "module",
+  "bin": {
+    "haunt-cli": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "haunt",
+    "haunt-api",
+    "mcp",
+    "ai-agent",
+    "cli",
+    "web-extraction",
+    "structured-data",
+    "scraping-api",
+    "json-extraction"
+  ],
+  "author": "Haunt API",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Darko893/mcp-server.git",
+    "directory": "packages/haunt-cli"
+  },
+  "homepage": "https://hauntapi.com/agents",
+  "bugs": {
+    "url": "https://github.com/Darko893/mcp-server/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
