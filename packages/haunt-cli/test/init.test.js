@@ -55,7 +55,7 @@ test("help and version work", () => {
 
   const version = run(["--version"]);
   assert.equal(version.status, 0, version.stderr);
-  assert.match(version.stdout, /^1\.0\.0\n$/);
+  assert.match(version.stdout, /^1\.0\.1\n$/);
 });
 
 test("unknown command fails clearly", () => {

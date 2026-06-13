@@ -3,7 +3,7 @@
 import { realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 const MCP_PACKAGE = "@hauntapi/mcp-server";
 const MCP_COMMAND = "npx";
 const MCP_ARGS = ["-y", MCP_PACKAGE];
@@ -28,9 +28,9 @@ Options:
   -v, --version       Show version.
 
 Examples:
-  npx -y @hauntapi/cli@latest init
-  HAUNT_API_KEY=${PLACEHOLDER_KEY} npx -y @hauntapi/cli@latest init
-  npx -y @hauntapi/cli@latest init --format json
+  npx -y --package @hauntapi/cli@latest haunt-cli init
+  HAUNT_API_KEY=${PLACEHOLDER_KEY} npx -y --package @hauntapi/cli@latest haunt-cli init
+  npx -y --package @hauntapi/cli@latest haunt-cli init --format json
 `;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@hauntapi/mcp-server",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "mcpName": "io.github.Darko893/mcp-server",
   "description": "MCP web extraction for permitted public pages: no-key demo plus live URL-to-JSON extraction with honest blocked-page errors",
   "main": "index.js",
