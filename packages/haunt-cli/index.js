@@ -28,9 +28,9 @@ Options:
   -v, --version       Show version.
 
 Examples:
-  npx -y haunt-cli@latest init
-  HAUNT_API_KEY=${PLACEHOLDER_KEY} npx -y haunt-cli@latest init
-  npx -y haunt-cli@latest init --format json
+  npx -y @hauntapi/haunt-cli@latest init
+  HAUNT_API_KEY=${PLACEHOLDER_KEY} npx -y @hauntapi/haunt-cli@latest init
+  npx -y @hauntapi/haunt-cli@latest init --format json
 `;
 }
 

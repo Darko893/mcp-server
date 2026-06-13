@@ -254,7 +254,7 @@ function initializeResult(id) {
     result: {
       protocolVersion: "2024-11-05",
       capabilities: { tools: {} },
-      serverInfo: { name: "haunt-api", version: "1.0.6" },
+      serverInfo: { name: "haunt-api", version: "1.0.7" },
     },
   });
 }

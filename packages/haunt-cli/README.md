@@ -3,19 +3,19 @@
 One-command Haunt setup for agents and MCP clients.
 
 ```bash
-npx -y haunt-cli@latest init
+npx -y @hauntapi/haunt-cli@latest init
 ```
 
 With a key:
 
 ```bash
-HAUNT_API_KEY=PASTE_YOUR_KEY_HERE npx -y haunt-cli@latest init
+HAUNT_API_KEY=PASTE_YOUR_KEY_HERE npx -y @hauntapi/haunt-cli@latest init
 ```
 
 Or:
 
 ```bash
-npx -y haunt-cli@latest init --key PASTE_YOUR_KEY_HERE
+npx -y @hauntapi/haunt-cli@latest init --key PASTE_YOUR_KEY_HERE
 ```
 
 The command prints a copy-paste MCP config for Claude, Cursor, Windsurf, and other MCP-compatible clients. It does not edit local config files for you.
@@ -23,7 +23,7 @@ The command prints a copy-paste MCP config for Claude, Cursor, Windsurf, and oth
 ## JSON output
 
 ```bash
-npx -y haunt-cli@latest init --format json
+npx -y @hauntapi/haunt-cli@latest init --format json
 ```
 
 ## What it installs
