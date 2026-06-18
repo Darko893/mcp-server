@@ -1,15 +1,22 @@
 {
   "name": "haunt-api",
-  "version": "1.0.0",
-  "description": "Structured web extraction for AI agents. Pass a URL and a plain-English prompt, get clean JSON. Handles JavaScript rendering, Cloudflare, and complex layouts automatically.",
+  "version": "1.0.1",
+  "description": "Web extraction for AI agents. Turn permitted public pages into clean JSON or markdown with clear failure states for blocked/login/CAPTCHA pages.",
   "author": {
     "name": "Haunt API",
     "url": "https://hauntapi.com"
   },
-  "homepage": "https://hauntapi.com/docs",
-  "repository": "https://github.com/Darko893/haunt-mcp-server",
+  "homepage": "https://hauntapi.com/agents",
+  "repository": "https://github.com/Darko893/mcp-server",
   "license": "MIT",
-  "keywords": ["web-scraping", "web-extraction", "structured-data", "ai-agents", "mcp", "data-extraction"],
+  "keywords": [
+    "web-scraping",
+    "web-extraction",
+    "structured-data",
+    "ai-agents",
+    "mcp",
+    "data-extraction"
+  ],
   "mcpServers": "./.mcp.json",
   "skills": "./skills/"
 }

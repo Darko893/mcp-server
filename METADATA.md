@@ -1,22 +1,24 @@
 # Haunt API MCP Server
 
-This repository provides connection details and documentation for the Haunt API MCP server, a hosted web extraction service for AI agents.
+This is a legacy public directory source for the Haunt API MCP server.
 
-**This is not self-hosted software.** The MCP server runs at `hauntapi.com` and is accessed remotely. No local installation required.
+Current install and package source:
+
+- NPM package: `@hauntapi/mcp-server`
+- Canonical repo: https://github.com/Darko893/mcp-server
+- Hosted MCP endpoint: https://hauntapi.com/mcp/server
+- Agent setup: https://hauntapi.com/agents
+
+Haunt gives AI agents a way to turn permitted public web pages into clean JSON or markdown. It supports JavaScript-rendered public pages where possible and returns clear failure states for blocked, login-required, CAPTCHA-gated, restricted, or unverified pages instead of fabricated data.
 
 ## Quick Start
 
-1. Get your API key at [hauntapi.com](https://hauntapi.com/#signup) (free tier available)
-2. Add the MCP config to your client (see [README.md](./README.md))
-3. Use `web_extract` with a permitted public URL and a description of what you want
+```bash
+npx -y --package @hauntapi/cli@latest haunt-cli init
+```
 
-## Transport Endpoints
+Free key: 1,000 credits/month, no card.
 
-- **SSE:** `https://hauntapi.com/sse` (for Claude Desktop)
-- **Streamable HTTP:** `https://hauntapi.com/mcp/` (for Cursor, Windsurf, VS Code)
+## Directory note
 
-## Directory Listings
-
-This repository exists so MCP directories (Smithery, Glama, mcp.so) can index Haunt API. The actual server and all extraction infrastructure runs on our hosted platform.
-
-For full documentation, visit [hauntapi.com/docs](https://hauntapi.com/docs).
+This repository exists so older MCP directories can continue resolving old URLs while pointing users at the current package and hosted MCP endpoint.

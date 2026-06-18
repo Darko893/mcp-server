@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "haunt": {
-      "url": "https://hauntapi.com/mcp/",
-      "description": "Web extraction — pass a URL and prompt, get structured JSON"
+      "url": "https://hauntapi.com/mcp/server",
+      "description": "Web extraction for AI agents — permitted public URL to clean JSON or markdown, with clear failure states for blocked pages"
     }
   }
 }

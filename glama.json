@@ -2,5 +2,38 @@
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "maintainers": [
     "Darko893"
-  ]
+  ],
+  "name": "Haunt — Web Extraction for AI Agents",
+  "description": "Web extraction MCP for AI agents. Turn permitted public URLs into clean JSON or markdown; clear failure states for blocked/login/CAPTCHA pages instead of fabricated data.",
+  "website": "https://hauntapi.com",
+  "docs": "https://hauntapi.com/docs",
+  "categories": [
+    "web-scraping",
+    "browser-automation",
+    "data-platforms"
+  ],
+  "transport": "remote",
+  "runtime": "node",
+  "pricing": {
+    "free": "1,000 credits/month, no card",
+    "starter": "10,000 credits/month for £19/month",
+    "pro": "30,000 credits/month for £49/month",
+    "scale": "80,000 credits/month for £99/month"
+  },
+  "tools": [
+    {
+      "name": "try_demo_extract",
+      "description": "No-key demo tool for checking Haunt output and setup links without using credits."
+    },
+    {
+      "name": "extract",
+      "description": "Extract structured JSON or markdown from permitted public web pages using a URL and plain-English prompt."
+    }
+  ],
+  "links": {
+    "currentRepository": "https://github.com/Darko893/mcp-server",
+    "npm": "https://www.npmjs.com/package/@hauntapi/mcp-server",
+    "hostedMcp": "https://hauntapi.com/mcp/server",
+    "agentSetup": "https://hauntapi.com/agents"
+  }
 }

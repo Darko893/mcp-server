@@ -1,19 +1,37 @@
 # Haunt API MCP Server
 
-> Current package note
+> Legacy directory listing note
 >
-> Use the current public NPM package `@hauntapi/mcp-server` and canonical repo: https://github.com/Darko893/mcp-server.
-> This repository remains public because old MCP directories, including Glama, may still index it.
+> This repository is kept public because older MCP directories, including Glama, may still index it.
+> For new installs, use the current public NPM package `@hauntapi/mcp-server`, the one-command CLI, or the hosted MCP endpoint.
+>
+> Canonical repo: https://github.com/Darko893/mcp-server
 
-Haunt turns permitted public web pages into structured JSON for Claude, Cursor, Windsurf, and other MCP-compatible agents.
+Haunt gives Claude, Cursor, Windsurf, and other MCP-compatible agents a clean web extraction tool: public URL → structured JSON or markdown instead of raw HTML.
 
-## Capability boundaries
+## Current setup
 
-Haunt does **not** promise universal extraction, Cloudflare bypass, CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention. It works best on permitted public pages and supported rendered pages. When a page is blocked, login-required, CAPTCHA-gated, or too thin to verify, Haunt should return a clear failure signal instead of fabricated data.
+### One-command agent setup
 
-## Quick Start
+```bash
+npx -y --package @hauntapi/cli@latest haunt-cli init
+```
 
-For new installs, use the current package:
+If you already have a Haunt API key:
+
+```bash
+HAUNT_API_KEY=PASTE_YOUR_KEY_HERE npx -y --package @hauntapi/cli@latest haunt-cli init
+```
+
+### Hosted MCP endpoint
+
+```text
+https://hauntapi.com/mcp/server
+```
+
+Transport: streamable HTTP JSON-RPC.
+
+### Local MCP package
 
 ```json
 {
@@ -29,48 +47,55 @@ For new installs, use the current package:
 }
 ```
 
-Get a free API key at [hauntapi.com](https://hauntapi.com/#signup). Free tier: 100 successful requests/month, no credit card needed.
+## Free tier
+
+Get a free API key at [hauntapi.com](https://hauntapi.com/#signup).
+
+Free tier: **1,000 credits/month, no credit card needed.**
+
+Credits are not one-to-one requests. Simple public/non-LLM output usually uses 1 credit, normal structured extraction 2, browser-rendered extraction 4, and heavier extraction 8. Failed, blocked, login/CAPTCHA, provider, and server failures do not burn credits.
+
+## Capability boundaries
+
+Haunt does **not** promise universal extraction, CAPTCHA solving, login-wall access, paywall access, restricted-page access, or bot-challenge circumvention.
+
+It works best on permitted public pages and supported rendered pages. When a page is blocked, login-required, CAPTCHA-gated, paywalled, restricted, or too thin to verify, Haunt returns a clear failure signal instead of fabricated data.
 
 ## Tools
 
-### `extract_url`
+### `try_demo_extract`
 
-Extract structured data from permitted public web pages. Provide a URL and a plain-English prompt describing what you want. Supported JavaScript-rendered pages can work, but blocked, CAPTCHA-gated, login-required, paywalled, or restricted pages should return explicit errors rather than guessed data.
+No-key activation check. Use this first to verify the MCP connection and see Haunt's demo/docs/signup links without using credits.
 
-```text
-Extract the product name, price, and availability from https://example.com/product
-```
+### `extract`
 
-### `extract_article`
+Extract structured data from a permitted public web page. Provide a URL and a plain-English prompt describing the fields you want.
 
-Extract article fields from news, blog, and editorial pages. Returns title, body text, author, and publish date when available.
+Example prompt:
 
 ```text
-Extract the article content from https://example.com/blog/post
+Extract the product name, price, availability, and review count from https://example.com/product
 ```
 
-### `extract_metadata`
-
-Pull metadata from permitted public URLs: title, description, Open Graph tags, Twitter cards, and canonical URL.
-
-```text
-Get the Open Graph metadata for https://example.com
-```
+The current package may also expose helper aliases such as `extract_url`, `extract_article`, and `extract_metadata` for client compatibility.
 
 ## Pricing
 
-| Plan | Successful requests | Price |
-|------|---------------------|-------|
-| Free | 100/mo | £0 |
-| Starter | 5,000/mo | £19/mo |
-| Pro | 25,000/mo | £49/mo |
-| Scale | 75,000/mo | £99/mo |
+| Plan | Credits | Price |
+|------|---------|-------|
+| Free | 1,000/mo | £0 |
+| Starter | 10,000/mo | £19/mo |
+| Pro | 30,000/mo | £49/mo |
+| Scale | 80,000/mo | £99/mo |
 
 Upgrade: https://hauntapi.com/#pricing
 
 ## Links
 
 - Website: https://hauntapi.com
-- API Docs: https://hauntapi.com/docs
-- Get API Key: https://hauntapi.com/#signup
+- Docs: https://hauntapi.com/docs
+- Agent setup: https://hauntapi.com/agents
+- Hosted MCP info: https://hauntapi.com/mcp/server
+- Get API key: https://hauntapi.com/#signup
 - Current repo: https://github.com/Darko893/mcp-server
+- Current NPM package: https://www.npmjs.com/package/@hauntapi/mcp-server
