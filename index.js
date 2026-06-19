@@ -81,7 +81,7 @@ const TOOLS = [
     description:
       "Extract structured data from permitted public web pages by providing a URL and describing what you want. " +
       "Returns clean JSON with exactly the fields you asked for, no HTML parsing needed. " +
-      "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. It does not promise Cloudflare/CAPTCHA/login-wall/paywall bypass or anti-bot circumvention. " +
+      "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. It does not solve CAPTCHA, access login/paywall-only pages, or circumvent anti-bot controls. " +
       "This is the general-purpose extraction tool. Use extract_article for full article content or extract_metadata for page meta tags instead, they are optimised shortcuts. " +
       "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
       "Free tier: 1,000 credits/month. Returns an error if rate limit, credit quota, or API key is invalid.",

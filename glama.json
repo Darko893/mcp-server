@@ -1,5 +1,42 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "name": "@hauntapi/mcp-server",
+  "description": "MCP web extraction for permitted public pages. Includes no-key demo, live URL-to-JSON extraction, and honest blocked-page errors.",
+  "url": "https://github.com/Darko893/mcp-server",
+  "npm": "https://www.npmjs.com/package/@hauntapi/mcp-server",
+  "website": "https://hauntapi.com",
+  "docs": "https://hauntapi.com/docs",
+  "categories": [
+    "web-scraping",
+    "browser-automation",
+    "data-extraction"
+  ],
+  "tools": [
+    {
+      "name": "try_demo_extract",
+      "description": "No-key activation check returning demo, docs, signup, pricing, and free-tier links."
+    },
+    {
+      "name": "extract_url",
+      "description": "Extract structured JSON from a permitted public URL with explicit blocked-page errors."
+    },
+    {
+      "name": "extract_article",
+      "description": "Extract article fields when the article is publicly accessible."
+    },
+    {
+      "name": "extract_metadata",
+      "description": "Extract page metadata, Open Graph tags, Twitter Card tags, and canonical URL."
+    }
+  ],
+  "pricing": {
+    "free": "1,000 credits/month",
+    "starter": "\u00a319/month for 10,000 credits",
+    "pro": "\u00a349/month for 30,000 credits",
+    "scale": "\u00a399/month for 80,000 credits"
+  },
+  "transport": "stdio",
+  "runtime": "node",
   "maintainers": [
     "Darko893"
   ]

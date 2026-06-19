@@ -38,4 +38,4 @@ Use the `try_demo_extract` MCP tool first. It works without spending credits. Re
 
 ## Boundaries
 
-Haunt extracts structured data from permitted public web pages and supported rendered pages. It does not promise CAPTCHA solving, login-wall bypass, paywall access, or anti-bot circumvention.
+Haunt extracts structured data from permitted public web pages and supported rendered pages. It does not promise CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention.

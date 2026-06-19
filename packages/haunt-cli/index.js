@@ -142,7 +142,7 @@ function buildInitPayload(options) {
     rest_fallback: `curl -sS ${baseUrl}/v1/extract -H "Content-Type: application/json" -H "X-API-Key: ${apiKey}" -d '{"url":"https://example.com","prompt":"Extract the page title"}'`,
     boundaries: [
       "Use only for permitted public pages or content you are authorised to access.",
-      "Haunt does not promise CAPTCHA solving, login-wall bypass, paywall access, or anti-bot circumvention.",
+      "Haunt does not promise CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention.",
       "Blocked, login-required, CAPTCHA-gated, or thin pages should fail clearly instead of returning fabricated data.",
     ],
   };

@@ -61,7 +61,7 @@ Use Haunt to extract the product name, price, availability, and review count fro
 
 ## Capability boundaries
 
-Haunt does **not** promise universal extraction, Cloudflare bypass, CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention. It works best on permitted public pages and supported rendered pages. When a page is blocked, login-required, CAPTCHA-gated, or too thin to verify, Haunt should return a clear failure signal instead of fabricated data.
+Haunt does **not** promise universal extraction, CAPTCHA solving, login-wall access, paywall access, or anti-bot circumvention. It works best on permitted public pages and supported rendered pages. When a page is blocked, login-required, CAPTCHA-gated, or too thin to verify, Haunt returns a clear failure signal instead of fabricated data.
 
 ## Tools
 
