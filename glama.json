@@ -1,7 +1,7 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "@hauntapi/mcp-server",
-  "description": "MCP web extraction for permitted public pages. Includes no-key demo, live URL-to-JSON extraction, and honest blocked-page errors.",
+  "description": "MCP web extraction for permitted public pages. Includes no-key demo, live URL-to-JSON and Markdown extraction, and honest blocked-page errors.",
   "url": "https://github.com/Darko893/mcp-server",
   "npm": "https://www.npmjs.com/package/@hauntapi/mcp-server",
   "website": "https://hauntapi.com",
@@ -18,7 +18,11 @@
     },
     {
       "name": "extract_url",
-      "description": "Extract structured JSON from a permitted public URL with explicit blocked-page errors."
+      "description": "Extract structured JSON by default from a permitted public URL. Optional response_format can return Markdown or raw HTML."
+    },
+    {
+      "name": "extract_markdown",
+      "description": "Return clean Markdown from a permitted public page for agents, RAG ingestion, notes, and .md files."
     },
     {
       "name": "extract_article",
