@@ -259,14 +259,22 @@ let buffer = "";
 
 export { TOOLS, handleToolCall };
 
+function findHeaderBoundary() {
+  const crlf = buffer.indexOf("\r\n\r\n");
+  const lf = buffer.indexOf("\n\n");
+  if (crlf === -1 && lf === -1) return null;
+  if (crlf !== -1 && (lf === -1 || crlf < lf)) return { index: crlf, length: 4 };
+  return { index: lf, length: 2 };
+}
+
 function nextBufferedMessage() {
-  const headerEnd = buffer.indexOf("\r\n\r\n");
-  if (headerEnd === -1) return null;
-  const header = buffer.slice(0, headerEnd);
-  const match = header.match(/Content-Length: (\d+)/);
+  const boundary = findHeaderBoundary();
+  if (!boundary) return null;
+  const header = buffer.slice(0, boundary.index);
+  const match = header.match(/Content-Length:\s*(\d+)/i);
   if (!match) return null;
-  const messageStart = headerEnd + 4;
-  const messageEnd = messageStart + parseInt(match[1]);
+  const messageStart = boundary.index + boundary.length;
+  const messageEnd = messageStart + parseInt(match[1], 10);
   if (buffer.length < messageEnd) return null;
   const message = buffer.slice(messageStart, messageEnd);
   buffer = buffer.slice(messageEnd);
