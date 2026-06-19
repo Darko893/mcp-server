@@ -38,7 +38,7 @@ function framed(payload, separator) {
   return `Content-Length: ${Buffer.byteLength(body)}${separator}${body}`;
 }
 
-test("stdio MCP handler accepts LF-only message header separator used by some proxies", async () => {
+test("stdio MCP handler accepts LF-only message header separator", async () => {
   const child = spawn(process.execPath, ["index.js"], {
     cwd: new URL("..", import.meta.url),
     stdio: ["pipe", "pipe", "pipe"],
@@ -55,6 +55,37 @@ test("stdio MCP handler accepts LF-only message header separator used by some pr
         clientInfo: { name: "test-proxy", version: "1.0.0" },
       },
     }, "\n\n"));
+    const response = await responsePromise;
+    assert.equal(response.id, 1);
+    assert.equal(response.result.serverInfo.name, "haunt-api");
+  } finally {
+    child.kill();
+  }
+});
+
+test("stdio MCP handler accepts JSONL transport used by mcp-proxy", async () => {
+  const child = spawn(process.execPath, ["index.js"], {
+    cwd: new URL("..", import.meta.url),
+    stdio: ["pipe", "pipe", "pipe"],
+  });
+  try {
+    const responsePromise = new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error("timed out waiting for JSONL MCP response")), 2000);
+      child.stdout.once("data", (chunk) => {
+        clearTimeout(timeout);
+        resolve(JSON.parse(chunk.toString().trim()));
+      });
+    });
+    child.stdin.write(JSON.stringify({
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "2024-11-05",
+        capabilities: {},
+        clientInfo: { name: "mcp-proxy", version: "6.4.3" },
+      },
+    }) + "\n");
     const response = await responsePromise;
     assert.equal(response.id, 1);
     assert.equal(response.result.serverInfo.name, "haunt-api");

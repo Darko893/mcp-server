@@ -269,27 +269,38 @@ function findHeaderBoundary() {
 
 function nextBufferedMessage() {
   const boundary = findHeaderBoundary();
-  if (!boundary) return null;
-  const header = buffer.slice(0, boundary.index);
-  const match = header.match(/Content-Length:\s*(\d+)/i);
-  if (!match) return null;
-  const messageStart = boundary.index + boundary.length;
-  const messageEnd = messageStart + parseInt(match[1], 10);
-  if (buffer.length < messageEnd) return null;
-  const message = buffer.slice(messageStart, messageEnd);
-  buffer = buffer.slice(messageEnd);
-  return message;
+  if (boundary) {
+    const header = buffer.slice(0, boundary.index);
+    const match = header.match(/Content-Length:\s*(\d+)/i);
+    if (match) {
+      const messageStart = boundary.index + boundary.length;
+      const messageEnd = messageStart + parseInt(match[1], 10);
+      if (buffer.length < messageEnd) return null;
+      const message = buffer.slice(messageStart, messageEnd);
+      buffer = buffer.slice(messageEnd);
+      return { message, responseMode: "framed" };
+    }
+  }
+
+  const firstNonWhitespace = buffer.search(/\S/);
+  if (firstNonWhitespace > 0) buffer = buffer.slice(firstNonWhitespace);
+  if (!buffer.startsWith("{")) return null;
+  const lineEnd = buffer.indexOf("\n");
+  if (lineEnd === -1) return null;
+  const message = buffer.slice(0, lineEnd).replace(/\r$/, "");
+  buffer = buffer.slice(lineEnd + 1);
+  return { message, responseMode: "jsonl" };
 }
 
 function processBufferedMessages() {
-  let message = nextBufferedMessage();
-  while (message) {
+  let entry = nextBufferedMessage();
+  while (entry) {
     try {
-      handleRequest(JSON.parse(message));
+      handleRequest(JSON.parse(entry.message), entry.responseMode);
     } catch (e) {
       // ignore parse errors
     }
-    message = nextBufferedMessage();
+    entry = nextBufferedMessage();
   }
 }
 
@@ -312,7 +323,7 @@ if (isMainModule()) {
   startServer();
 }
 
-function initializeResult(id) {
+function initializeResult(id, responseMode) {
   send({
     jsonrpc: "2.0",
     id,
@@ -321,39 +332,43 @@ function initializeResult(id) {
       capabilities: { tools: {} },
       serverInfo: { name: "haunt-api", version: "1.0.7" },
     },
-  });
+  }, responseMode);
 }
 
-function listToolsResult(id) {
-  send({ jsonrpc: "2.0", id, result: { tools: TOOLS } });
+function listToolsResult(id, responseMode) {
+  send({ jsonrpc: "2.0", id, result: { tools: TOOLS } }, responseMode);
 }
 
-async function callToolResult({ id, params }) {
+async function callToolResult({ id, params }, responseMode) {
   try {
     const result = await handleToolCall(params.name, params.arguments || {});
-    send({ jsonrpc: "2.0", id, result });
+    send({ jsonrpc: "2.0", id, result }, responseMode);
   } catch (e) {
-    send({ jsonrpc: "2.0", id, result: { content: [{ type: "text", text: `Error: ${e.message}` }], isError: true } });
+    send({ jsonrpc: "2.0", id, result: { content: [{ type: "text", text: `Error: ${e.message}` }], isError: true } }, responseMode);
   }
 }
 
 const REQUEST_HANDLERS = {
-  initialize: ({ id }) => initializeResult(id),
+  initialize: ({ id }, responseMode) => initializeResult(id, responseMode),
   "notifications/initialized": () => {},
-  "tools/list": ({ id }) => listToolsResult(id),
+  "tools/list": ({ id }, responseMode) => listToolsResult(id, responseMode),
   "tools/call": callToolResult,
 };
 
-async function handleRequest(request) {
+async function handleRequest(request, responseMode = "framed") {
   const handler = REQUEST_HANDLERS[request.method];
   if (handler) {
-    await handler(request);
+    await handler(request, responseMode);
     return;
   }
-  send({ jsonrpc: "2.0", id: request.id, error: { code: -32601, message: `Method not found: ${request.method}` } });
+  send({ jsonrpc: "2.0", id: request.id, error: { code: -32601, message: `Method not found: ${request.method}` } }, responseMode);
 }
 
-function send(msg) {
+function send(msg, responseMode = "framed") {
   const data = JSON.stringify(msg);
+  if (responseMode === "jsonl") {
+    stdout.write(`${data}\n`);
+    return;
+  }
   stdout.write(`Content-Length: ${Buffer.byteLength(data)}\r\n\r\n${data}`);
 }
