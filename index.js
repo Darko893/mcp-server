@@ -83,6 +83,23 @@ async function hauntExtract(url, prompt, options = {}) {
   return resp.json();
 }
 
+async function hauntUsage() {
+  if (!API_KEY) {
+    throw new Error(
+      `Missing HAUNT_API_KEY. Try the no-key try_demo_extract tool first, then get a free key at ${ACTIVATION.signup_url}. Free tier: ${ACTIVATION.free_tier}.`
+    );
+  }
+
+  const resp = await fetch(`${API_BASE}/extract/usage`, {
+    headers: { "X-API-Key": API_KEY },
+  });
+  if (!resp.ok) {
+    const err = await resp.text();
+    throw new Error(`Haunt API error (${resp.status}): ${err}`);
+  }
+  return resp.json();
+}
+
 // Tool definitions, descriptions optimized for agent marketplaces
 const TOOLS = [
   {
@@ -198,6 +215,17 @@ const TOOLS = [
       required: ["url"],
     },
   },
+  {
+    name: "get_usage",
+    description:
+      "Check current Haunt plan, monthly credit limit, used credits, and remaining credits. " +
+      "Read-only. Requires HAUNT_API_KEY environment variable.",
+    inputSchema: {
+      type: "object",
+      properties: {},
+      additionalProperties: false,
+    },
+  },
 ];
 
 function textContent(payload) {
@@ -239,12 +267,17 @@ async function extractMetadataTool(args) {
   ));
 }
 
+async function getUsageTool() {
+  return textContent(await hauntUsage());
+}
+
 const TOOL_HANDLERS = {
   try_demo_extract: demoToolResult,
   extract_url: extractUrlTool,
   extract_markdown: extractMarkdownTool,
   extract_article: extractArticleTool,
   extract_metadata: extractMetadataTool,
+  get_usage: getUsageTool,
 };
 
 // Handle tool calls

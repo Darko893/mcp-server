@@ -9,8 +9,16 @@ test("tools/list exposes a no-key activation demo before paid extraction tools",
   assert.equal(names[0], "try_demo_extract");
   assert.ok(names.includes("extract_url"));
   assert.ok(names.includes("extract_markdown"));
+  assert.ok(names.includes("get_usage"));
   assert.match(TOOLS[0].description, /no API key/i);
   assert.match(TOOLS[0].description, /1,000 credits/i);
+});
+
+test("get_usage is discoverable as read-only account telemetry", () => {
+  const usage = TOOLS.find((tool) => tool.name === "get_usage");
+  assert.ok(usage);
+  assert.deepEqual(usage.inputSchema.properties, {});
+  assert.match(usage.description, /monthly credit/i);
 });
 
 test("extract_url exposes markdown response format for agent workflows", () => {
