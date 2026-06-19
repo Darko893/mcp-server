@@ -1,8 +1,8 @@
 {
   "name": "@hauntapi/mcp-server",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "mcpName": "io.github.Darko893/mcp-server",
-  "description": "MCP web extraction for permitted public pages: no-key demo plus live URL-to-JSON extraction with honest blocked-page errors",
+  "description": "MCP web extraction for permitted public pages: no-key demo plus live URL-to-JSON and Markdown output with honest blocked-page errors",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -31,6 +31,8 @@
     "web-extraction",
     "data-extraction",
     "structured-data",
+    "markdown",
+    "markdown-extraction",
     "clean-failure",
     "scraper-api",
     "json-extraction",

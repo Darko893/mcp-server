@@ -4,7 +4,7 @@ This is the canonical public MCP package working tree for `@hauntapi/mcp-server`
 
 Give Claude, Cursor, Windsurf, and other MCP-compatible agents a clean web extraction tool.
 
-Haunt turns permitted public web pages into structured JSON using natural-language prompts. It is built for agent workflows that need product data, competitor pricing, article content, metadata, lead lists, research snippets, or other visible web data without maintaining brittle selectors.
+Haunt turns permitted public web pages into structured JSON using natural-language prompts. It can also return clean Markdown for agents, RAG pipelines, notes, and `.md` files when you need page text instead of typed fields. It is built for agent workflows that need product data, competitor pricing, article content, metadata, lead lists, research snippets, Markdown page text, or other visible web data without maintaining brittle selectors.
 
 ## Quick Start
 
@@ -58,6 +58,12 @@ Then ask your agent:
 Use Haunt to extract the product name, price, availability, and review count from https://example.com/product
 ```
 
+For Markdown output:
+
+```text
+Use Haunt extract_markdown to turn https://example.com/docs into clean Markdown.
+```
+
 
 ## Capability boundaries
 
@@ -82,6 +88,12 @@ Use it for:
 - Research pages
 - Supported permitted public pages where you want clean JSON instead of HTML
 
+It accepts optional `response_format` values: `json` (default), `markdown` / `md`, and `raw_html` / `html`.
+
+### `extract_markdown`
+
+Return clean Markdown from a permitted public page. Use this when the agent or workflow wants readable page text for RAG, notes, docs ingestion, or saving as a `.md` file instead of structured fields.
+
 ### `extract_article`
 
 Extract article fields from news, blog, and editorial pages.
@@ -98,6 +110,7 @@ Extract page metadata including title, description, Open Graph tags, Twitter Car
 - Supported fetch paths for JavaScript-heavy pages
 - Challenge-aware extraction with machine-readable verification signals (`error_code`, `captcha_provider`, `requires_human_verification`)
 - Clean JSON output for agents, databases, and workflows
+- Clean Markdown output when the job is page text for agents, RAG, notes, or `.md` files
 - Free tier for testing
 
 ## Pricing

@@ -8,8 +8,27 @@ test("tools/list exposes a no-key activation demo before paid extraction tools",
 
   assert.equal(names[0], "try_demo_extract");
   assert.ok(names.includes("extract_url"));
+  assert.ok(names.includes("extract_markdown"));
   assert.match(TOOLS[0].description, /no API key/i);
   assert.match(TOOLS[0].description, /1,000 credits/i);
+});
+
+test("extract_url exposes markdown response format for agent workflows", () => {
+  const extractUrl = TOOLS.find((tool) => tool.name === "extract_url");
+  assert.ok(extractUrl);
+  assert.deepEqual(
+    extractUrl.inputSchema.properties.response_format.enum,
+    ["json", "markdown", "md", "raw_html", "html"]
+  );
+  assert.match(extractUrl.description, /Markdown/i);
+});
+
+test("extract_markdown is discoverable as a dedicated MCP tool", () => {
+  const extractMarkdown = TOOLS.find((tool) => tool.name === "extract_markdown");
+  assert.ok(extractMarkdown);
+  assert.deepEqual(Object.keys(extractMarkdown.inputSchema.properties), ["url"]);
+  assert.match(extractMarkdown.description, /Markdown/i);
+  assert.match(extractMarkdown.description, /RAG/i);
 });
 
 test("try_demo_extract returns activation links without requiring HAUNT_API_KEY", async () => {
