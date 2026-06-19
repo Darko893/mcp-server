@@ -31,6 +31,10 @@
     {
       "name": "extract_metadata",
       "description": "Extract page metadata, Open Graph tags, Twitter Card tags, and canonical URL."
+    },
+    {
+      "name": "get_usage",
+      "description": "Check current plan, monthly credit limit, used credits, and remaining credits."
     }
   ],
   "pricing": {
