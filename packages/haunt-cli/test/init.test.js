@@ -24,6 +24,8 @@ test("init prints one-command MCP setup with placeholder key", () => {
   assert.match(result.stdout, /npx -y @hauntapi\/mcp-server/);
   assert.match(result.stdout, /PASTE_YOUR_KEY_HERE/);
   assert.match(result.stdout, /try_demo_extract/);
+  assert.match(result.stdout, /extract_markdown/);
+  assert.match(result.stdout, /get_usage/);
   assert.match(result.stdout, /https:\/\/hauntapi\.com\/agents/);
   assert.doesNotMatch(result.stdout, /undefined/);
 });
@@ -48,6 +50,8 @@ test("init accepts --key and prints JSON shape", () => {
   assert.deepEqual(payload.mcp_config.mcpServers.haunt.args, ["-y", "@hauntapi/mcp-server"]);
   assert.equal(payload.mcp_config.mcpServers.haunt.env.HAUNT_API_KEY, "haunt_cli_test");
   assert.ok(payload.boundaries.some((line) => line.includes("CAPTCHA")));
+  assert.ok(payload.next_steps.some((step) => step.includes("extract_markdown")));
+  assert.ok(payload.next_steps.some((step) => step.includes("get_usage")));
 });
 
 test("help and version work", () => {

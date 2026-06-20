@@ -14,7 +14,7 @@
   "tools": [
     {
       "name": "try_demo_extract",
-      "description": "No-key activation check returning demo, docs, signup, pricing, and free-tier links."
+      "description": "No-key activation check returning fixed sample extraction JSON/trace, docs, signup, pricing, and free-tier links."
     },
     {
       "name": "extract",

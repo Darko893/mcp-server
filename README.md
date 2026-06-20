@@ -26,7 +26,7 @@ The CLI prints the MCP config for Claude, Cursor, Windsurf, and other MCP-compat
 
 ### 1. Prove the MCP package is wired in, no key needed
 
-Install the MCP server and call `try_demo_extract` first. It returns the demo, docs, signup, pricing, and free-tier links without using credits.
+Install the MCP server and call `try_demo_extract` first. It returns a fixed sample extraction JSON/trace plus docs, signup, pricing, and free-tier links without using credits.
 
 ```text
 Use Haunt's try_demo_extract tool and show me the signup and docs links.
@@ -73,7 +73,7 @@ Haunt does **not** promise universal extraction, CAPTCHA solving, login-wall acc
 
 ### `try_demo_extract`
 
-No-key activation check. Returns Haunt's demo endpoint, docs, signup, pricing, MCP info route, and free-tier details. Use this first when a user has installed the MCP server but has not added `HAUNT_API_KEY` yet.
+No-key activation check. Returns a fixed sample extraction JSON/trace, Haunt's demo endpoint, docs, signup, pricing, MCP info route, and free-tier details. Use this first when a user has installed the MCP server but has not added `HAUNT_API_KEY` yet.
 
 ### `extract` / `extract_url`
 

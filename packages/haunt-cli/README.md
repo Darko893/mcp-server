@@ -34,7 +34,7 @@ The generated config uses the public MCP server package:
 npx -y @hauntapi/mcp-server
 ```
 
-Use the `try_demo_extract` MCP tool first. It works without spending credits. Real extraction needs a Haunt API key from https://hauntapi.com/#signup.
+Use the `try_demo_extract` MCP tool first. It works without spending credits and shows the sample JSON/trace shape. Real extraction needs a Haunt API key from https://hauntapi.com/#signup. After adding `HAUNT_API_KEY`, use `extract` / `extract_url` for structured JSON, `extract_markdown` for clean page text, then call `get_usage` to check used, reserved, and remaining credits.
 
 ## Boundaries
 

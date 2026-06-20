@@ -40,6 +40,25 @@ const ACTIVATION = {
   credit_model: "simple=1, normal_structured=2, browser_or_auth=4, heavy_or_screenshot=8, failed=0",
 };
 
+const DEMO_EXTRACT_SAMPLE = {
+  demo_only: true,
+  no_signup_required: true,
+  no_remote_fetch_performed: true,
+  success: true,
+  message: "This is a fixed no-key Haunt demo response. Add HAUNT_API_KEY for live extraction from your own URLs.",
+  data: {
+    headline: "The easiest way to get data off the web.",
+    promise: "Haunt reads permitted public web pages and returns structured JSON or clean Markdown for apps and AI agents.",
+    free_allowance: "1,000 credits/month",
+    primary_cta: "Get a free key",
+  },
+  trace: {
+    fetch: { source: "demo_fixture", status_code: 200 },
+    extraction: { mode: "fixed_demo", confidence: 1.0 },
+    summary: "No remote page was fetched and no credits were used.",
+  },
+};
+
 // Haunt API call
 function normalizedResponseFormat(value) {
   if (value === undefined || value === null || value === "") return undefined;
@@ -274,7 +293,13 @@ function textContent(payload) {
 function demoToolResult() {
   return textContent({
     ...ACTIVATION,
-    message: "Haunt's MCP package is installed. Use extract or extract_url for JSON, extract_markdown for page text, extract_article, or extract_metadata with HAUNT_API_KEY for live extraction.",
+    ...DEMO_EXTRACT_SAMPLE,
+    next_steps: [
+      "Inspect this fixed sample JSON and trace.",
+      "Add HAUNT_API_KEY to your MCP client config.",
+      "Call extract or extract_url for structured JSON, or extract_markdown for page text.",
+      "Call get_usage after your first live extraction to see used, reserved, and remaining credits.",
+    ],
     example_prompt: "Use Haunt to extract product name, price, availability, and review count from a public product page.",
     markdown_example: "Use Haunt extract_markdown on a public docs page and save the result as Markdown.",
   });

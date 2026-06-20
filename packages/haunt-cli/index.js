@@ -131,7 +131,8 @@ function buildInitPayload(options) {
     next_steps: [
       "Paste the MCP config into Claude, Cursor, Windsurf, or another MCP-compatible client.",
       "Use the try_demo_extract tool first. It works without spending credits.",
-      "Use extract_url, extract_article, or extract_metadata for live extraction after adding HAUNT_API_KEY.",
+      "Add HAUNT_API_KEY, then use extract/extract_url for JSON or extract_markdown for page text.",
+      "Call get_usage after the first live extraction to see used, reserved, and remaining credits.",
     ],
     links: {
       signup: `${baseUrl}/#signup`,
@@ -164,6 +165,8 @@ Try first:
 
 Then ask:
   Use Haunt to extract product name, price, and availability from a public product page.
+  Use Haunt extract_markdown on a public docs page and save it as Markdown.
+  Then call get_usage to check used, reserved, and remaining credits.
 
 REST fallback:
   ${payload.rest_fallback}

@@ -53,6 +53,11 @@ test("try_demo_extract returns activation links without requiring HAUNT_API_KEY"
   assert.equal(payload.demo_url, "https://hauntapi.com/v1/demo/extract");
   assert.equal(payload.signup_url, "https://hauntapi.com/#signup");
   assert.equal(payload.free_tier, "1,000 credits/month");
+  assert.equal(payload.demo_only, true);
+  assert.equal(payload.success, true);
+  assert.ok(payload.data.headline);
+  assert.equal(payload.trace.fetch.source, "demo_fixture");
+  assert.ok(payload.next_steps.some((step) => step.includes("get_usage")));
 });
 
 test("live extraction tools fail locally with a signup path when HAUNT_API_KEY is missing", async () => {
@@ -79,4 +84,13 @@ test("initialize reports package version", async () => {
   }
   const payload = JSON.parse(output.trim());
   assert.equal(payload.result.serverInfo.version, packageJson.version);
+});
+
+
+test("server.json stays version-aligned with package metadata", () => {
+  const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+  const serverJson = JSON.parse(readFileSync(new URL("../server.json", import.meta.url), "utf8"));
+
+  assert.equal(serverJson.version, packageJson.version);
+  assert.equal(serverJson.packages[0].version, packageJson.version);
 });
