@@ -17,6 +17,10 @@
       "description": "No-key activation check returning demo, docs, signup, pricing, and free-tier links."
     },
     {
+      "name": "extract",
+      "description": "Alias for extract_url. Extract structured JSON by default from a permitted public URL, with optional Markdown/raw HTML response_format."
+    },
+    {
       "name": "extract_url",
       "description": "Extract structured JSON by default from a permitted public URL. Optional response_format can return Markdown or raw HTML."
     },

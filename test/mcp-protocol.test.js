@@ -7,6 +7,7 @@ test("tools/list exposes a no-key activation demo before paid extraction tools",
   const names = TOOLS.map((tool) => tool.name);
 
   assert.equal(names[0], "try_demo_extract");
+  assert.ok(names.includes("extract"));
   assert.ok(names.includes("extract_url"));
   assert.ok(names.includes("extract_markdown"));
   assert.ok(names.includes("get_usage"));
@@ -21,13 +22,16 @@ test("get_usage is discoverable as read-only account telemetry", () => {
   assert.match(usage.description, /monthly credit/i);
 });
 
-test("extract_url exposes markdown response format for agent workflows", () => {
+test("extract and extract_url expose markdown response format for agent workflows", () => {
+  const extract = TOOLS.find((tool) => tool.name === "extract");
+  assert.ok(extract);
   const extractUrl = TOOLS.find((tool) => tool.name === "extract_url");
   assert.ok(extractUrl);
   assert.deepEqual(
     extractUrl.inputSchema.properties.response_format.enum,
     ["json", "markdown", "md", "raw_html", "html"]
   );
+  assert.match(extract.description, /Markdown/i);
   assert.match(extractUrl.description, /Markdown/i);
 });
 
@@ -50,6 +54,10 @@ test("try_demo_extract returns activation links without requiring HAUNT_API_KEY"
 });
 
 test("live extraction tools fail locally with a signup path when HAUNT_API_KEY is missing", async () => {
+  await assert.rejects(
+    () => handleToolCall("extract", { url: "https://example.com", prompt: "title" }),
+    /Missing HAUNT_API_KEY.*try_demo_extract.*1,000 credits\/month/
+  );
   await assert.rejects(
     () => handleToolCall("extract_url", { url: "https://example.com", prompt: "title" }),
     /Missing HAUNT_API_KEY.*try_demo_extract.*1,000 credits\/month/

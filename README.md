@@ -75,9 +75,9 @@ Haunt does **not** promise universal extraction, CAPTCHA solving, login-wall acc
 
 No-key activation check. Returns Haunt's demo endpoint, docs, signup, pricing, MCP info route, and free-tier details. Use this first when a user has installed the MCP server but has not added `HAUNT_API_KEY` yet.
 
-### `extract_url`
+### `extract` / `extract_url`
 
-General-purpose extraction from permitted public web pages.
+General-purpose extraction from permitted public web pages. `extract` and `extract_url` are aliases so hosted MCP docs and local stdio package users can follow the same wording.
 
 Use it for:
 
@@ -103,6 +103,10 @@ Returns title, body text, author, and publish date when available.
 ### `extract_metadata`
 
 Extract page metadata including title, description, Open Graph tags, Twitter Card tags, canonical URL, and related metadata.
+
+### `get_usage`
+
+Check current plan, monthly credit limit, used credits, reserved credits, and remaining credits. Use this after a live extraction to see what was charged.
 
 ## Why Haunt
 
