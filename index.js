@@ -21,12 +21,15 @@
  * Plans: Starter £19/10k credits, Pro £49/30k credits, Scale £99/80k credits
  */
 
-import { realpathSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { stdin, stdout } from "node:process";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const API_BASE = "https://hauntapi.com/v1";
 const API_KEY = process.env.HAUNT_API_KEY || "";
+const PACKAGE_DIR = dirname(fileURLToPath(import.meta.url));
+const PACKAGE_VERSION = JSON.parse(readFileSync(join(PACKAGE_DIR, "package.json"), "utf8")).version;
 const ACTIVATION = {
   demo_url: "https://hauntapi.com/v1/demo/extract",
   docs_url: "https://hauntapi.com/docs",
@@ -254,7 +257,7 @@ const TOOLS = [
   {
     name: "get_usage",
     description:
-      "Check current Haunt plan, monthly credit limit, used credits, and remaining credits. " +
+      "Check current Haunt plan, monthly credit limit, used credits, reserved credits, and remaining credits. " +
       "Read-only. Requires HAUNT_API_KEY environment variable.",
     inputSchema: {
       type: "object",
@@ -327,7 +330,7 @@ async function handleToolCall(name, args) {
 // MCP protocol handler (stdio transport)
 let buffer = "";
 
-export { TOOLS, handleToolCall };
+export { TOOLS, handleRequest, handleToolCall };
 
 function findHeaderBoundary() {
   const crlf = buffer.indexOf("\r\n\r\n");
@@ -400,7 +403,7 @@ function initializeResult(id, responseMode) {
     result: {
       protocolVersion: "2024-11-05",
       capabilities: { tools: {} },
-      serverInfo: { name: "haunt-api", version: "1.0.7" },
+      serverInfo: { name: "haunt-api", version: PACKAGE_VERSION },
     },
   }, responseMode);
 }

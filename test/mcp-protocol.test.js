@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
-import { TOOLS, handleToolCall } from "../index.js";
+import { TOOLS, handleRequest, handleToolCall } from "../index.js";
 
 test("tools/list exposes a no-key activation demo before paid extraction tools", () => {
   const names = TOOLS.map((tool) => tool.name);
@@ -20,6 +21,7 @@ test("get_usage is discoverable as read-only account telemetry", () => {
   assert.ok(usage);
   assert.deepEqual(usage.inputSchema.properties, {});
   assert.match(usage.description, /monthly credit/i);
+  assert.match(usage.description, /reserved credits/i);
 });
 
 test("extract and extract_url expose markdown response format for agent workflows", () => {
@@ -62,4 +64,19 @@ test("live extraction tools fail locally with a signup path when HAUNT_API_KEY i
     () => handleToolCall("extract_url", { url: "https://example.com", prompt: "title" }),
     /Missing HAUNT_API_KEY.*try_demo_extract.*1,000 credits\/month/
   );
+});
+
+
+test("initialize reports package version", async () => {
+  const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+  let output = "";
+  const previousWrite = process.stdout.write;
+  process.stdout.write = (chunk) => { output += String(chunk); return true; };
+  try {
+    await handleRequest({ jsonrpc: "2.0", id: 42, method: "initialize" }, "jsonl");
+  } finally {
+    process.stdout.write = previousWrite;
+  }
+  const payload = JSON.parse(output.trim());
+  assert.equal(payload.result.serverInfo.version, packageJson.version);
 });

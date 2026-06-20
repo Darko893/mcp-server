@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
-import { realpathSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { readFileSync, realpathSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { pathToFileURL, fileURLToPath } from "node:url";
 
-const VERSION = "1.0.1";
+const PACKAGE_DIR = dirname(fileURLToPath(import.meta.url));
+const VERSION = JSON.parse(readFileSync(join(PACKAGE_DIR, "package.json"), "utf8")).version;
 const MCP_PACKAGE = "@hauntapi/mcp-server";
 const MCP_COMMAND = "npx";
 const MCP_ARGS = ["-y", MCP_PACKAGE];

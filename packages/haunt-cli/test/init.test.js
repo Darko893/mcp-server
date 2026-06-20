@@ -1,11 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const CLI = join(__dirname, "..", "index.js");
+const PACKAGE_JSON = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
 
 function run(args, options = {}) {
   return spawnSync(process.execPath, [CLI, ...args], {
@@ -55,7 +57,7 @@ test("help and version work", () => {
 
   const version = run(["--version"]);
   assert.equal(version.status, 0, version.stderr);
-  assert.match(version.stdout, /^1\.0\.1\n$/);
+  assert.equal(version.stdout, `${PACKAGE_JSON.version}\n`);
 });
 
 test("unknown command fails clearly", () => {

@@ -38,7 +38,7 @@
     },
     {
       "name": "get_usage",
-      "description": "Check current plan, monthly credit limit, used credits, and remaining credits."
+      "description": "Check current plan, monthly credit limit, used credits, reserved credits, and remaining credits."
     }
   ],
   "pricing": {
