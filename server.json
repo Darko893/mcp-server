@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.Darko893/mcp-server",
+  "name": "com.hauntapi/haunt",
   "description": "Extract public web pages to clean JSON or Markdown via MCP. No-key demo; failed calls not billed.",
   "repository": {
     "url": "https://github.com/Darko893/mcp-server",
     "source": "github"
   },
-  "version": "1.0.20",
+  "version": "1.0.21",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@hauntapi/mcp-server",
-      "version": "1.0.20",
+      "version": "1.0.21",
       "transport": {
         "type": "stdio"
       },
