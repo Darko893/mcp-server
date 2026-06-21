@@ -1,7 +1,7 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "@hauntapi/mcp-server",
-  "description": "MCP web extraction for permitted public pages. Includes no-key demo, live URL-to-JSON and Markdown extraction, and honest blocked-page errors.",
+  "description": "Structured web extraction for AI agents. Pass any URL and a plain-English prompt, get clean JSON or Markdown back. MCP-native, no-key demo, 1,000 free credits/month, and failed extractions don’t burn credits.",
   "url": "https://github.com/Darko893/mcp-server",
   "npm": "https://www.npmjs.com/package/@hauntapi/mcp-server",
   "website": "https://hauntapi.com",
@@ -43,9 +43,9 @@
   ],
   "pricing": {
     "free": "1,000 credits/month",
-    "starter": "\u00a319/month for 10,000 credits",
-    "pro": "\u00a349/month for 30,000 credits",
-    "scale": "\u00a399/month for 80,000 credits"
+    "starter": "£19/month for 10,000 credits",
+    "pro": "£49/month for 30,000 credits",
+    "scale": "£99/month for 80,000 credits"
   },
   "transport": "stdio",
   "runtime": "node",
