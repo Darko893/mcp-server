@@ -6,14 +6,32 @@
     "url": "https://github.com/Darko893/mcp-server",
     "source": "github"
   },
-  "version": "1.0.19",
+  "version": "1.0.20",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@hauntapi/mcp-server",
-      "version": "1.0.19",
+      "version": "1.0.20",
       "transport": {
         "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "description": "Haunt API key from https://hauntapi.com. Required for live extraction; not required for try_demo_extract.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": true,
+          "name": "HAUNT_API_KEY"
+        }
+      ]
+    },
+    {
+      "registryType": "remote",
+      "identifier": "https://hauntapi.com/mcp/server",
+      "version": "1.0.20",
+      "transport": {
+        "type": "streamable-http",
+        "url": "https://hauntapi.com/mcp/server"
       },
       "environmentVariables": [
         {
