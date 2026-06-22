@@ -90,6 +90,8 @@ async function hauntExtract(url, prompt, options = {}) {
   const body = { url, prompt };
   const responseFormat = normalizedResponseFormat(options.response_format);
   if (responseFormat) body.response_format = responseFormat;
+  if (options.device) body.device = options.device;
+  if (options.js_scenario) body.js_scenario = options.js_scenario;
 
   const resp = await fetch(`${API_BASE}/extract`, {
     method: "POST",
@@ -168,6 +170,16 @@ const TOOLS = [
           description:
             "Optional output mode. Leave blank or use json for structured extraction. Use markdown/md when you want clean page text for an agent, RAG pipeline, or .md file. Use raw_html/html only when you need the fetched HTML.",
         },
+        device: {
+          type: "string",
+          enum: ["mobile", "desktop"],
+          description: "Optional. Render with a mobile or desktop browser profile (user agent and viewport). Forces browser rendering.",
+        },
+        js_scenario: {
+          type: "array",
+          items: { type: "object" },
+          description: "Paid plans only. Up to 10 scripted browser steps run before extraction. Each step is an object {action: wait|wait_for|click|scroll|fill}: wait needs ms, wait_for/click/fill need selector, scroll needs pixels, fill needs text.",
+        },
       },
       required: ["url", "prompt"],
     },
@@ -203,6 +215,16 @@ const TOOLS = [
           enum: ["json", "markdown", "md", "raw_html", "html"],
           description:
             "Optional output mode. Leave blank or use json for structured extraction. Use markdown/md when you want clean page text for an agent, RAG pipeline, or .md file. Use raw_html/html only when you need the fetched HTML.",
+        },
+        device: {
+          type: "string",
+          enum: ["mobile", "desktop"],
+          description: "Optional. Render with a mobile or desktop browser profile (user agent and viewport). Forces browser rendering.",
+        },
+        js_scenario: {
+          type: "array",
+          items: { type: "object" },
+          description: "Paid plans only. Up to 10 scripted browser steps run before extraction. Each step is an object {action: wait|wait_for|click|scroll|fill}: wait needs ms, wait_for/click/fill need selector, scroll needs pixels, fill needs text.",
         },
       },
       required: ["url", "prompt"],
