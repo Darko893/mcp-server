@@ -31,16 +31,18 @@ test("init prints one-command MCP setup with placeholder key", () => {
 });
 
 test("init accepts HAUNT_API_KEY from environment", () => {
-  const result = run(["init", "--format", "json"], { env: { HAUNT_API_KEY: "haunt_test_key" } });
+  const exampleKey = "example-placeholder-value";
+  const result = run(["init", "--format", "json"], { env: { HAUNT_API_KEY: exampleKey } });
 
   assert.equal(result.status, 0, result.stderr);
   const payload = JSON.parse(result.stdout);
-  assert.equal(payload.mcp_config.mcpServers.haunt.env.HAUNT_API_KEY, "haunt_test_key");
-  assert.match(payload.rest_fallback, /haunt_test_key/);
+  assert.equal(payload.mcp_config.mcpServers.haunt.env.HAUNT_API_KEY, exampleKey);
+  assert.match(payload.rest_fallback, /example-placeholder-value/);
 });
 
 test("init accepts --key and prints JSON shape", () => {
-  const result = run(["init", "--format=json", "--client", "cursor", "--key", "haunt_cli_test"]);
+  const exampleKey = "example-cli-placeholder";
+  const result = run(["init", "--format=json", "--client", "cursor", "--key", exampleKey]);
 
   assert.equal(result.status, 0, result.stderr);
   const payload = JSON.parse(result.stdout);
@@ -48,7 +50,7 @@ test("init accepts --key and prints JSON shape", () => {
   assert.equal(payload.command, "haunt-cli init");
   assert.equal(payload.mcp_package, "@hauntapi/mcp-server");
   assert.deepEqual(payload.mcp_config.mcpServers.haunt.args, ["-y", "@hauntapi/mcp-server"]);
-  assert.equal(payload.mcp_config.mcpServers.haunt.env.HAUNT_API_KEY, "haunt_cli_test");
+  assert.equal(payload.mcp_config.mcpServers.haunt.env.HAUNT_API_KEY, exampleKey);
   assert.ok(payload.boundaries.some((line) => line.includes("CAPTCHA")));
   assert.ok(payload.next_steps.some((step) => step.includes("extract_markdown")));
   assert.ok(payload.next_steps.some((step) => step.includes("get_usage")));
