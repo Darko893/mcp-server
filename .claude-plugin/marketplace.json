@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "haunt-api",
+  "description": "Haunt API tools for Claude Code: install the Haunt MCP server and web-extraction skill.",
+  "owner": {
+    "name": "Haunt API",
+    "email": "support@hauntapi.com"
+  },
+  "plugins": [
+    {
+      "name": "haunt-mcp",
+      "source": "./",
+      "description": "Adds Haunt MCP web extraction: permitted public URL to clean JSON, Markdown, article fields, metadata, and usage checks.",
+      "version": "1.0.23",
+      "author": {
+        "name": "Haunt API",
+        "email": "support@hauntapi.com",
+        "url": "https://hauntapi.com"
+      },
+      "homepage": "https://hauntapi.com"
+    }
+  ]
+}

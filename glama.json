@@ -1,7 +1,7 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "@hauntapi/mcp-server",
-  "description": "Structured web extraction for AI agents. Pass any URL and a plain-English prompt, get clean JSON or Markdown back. MCP-native, no-key demo, 1,000 free credits/month, and failed extractions don’t burn credits.",
+  "description": "Structured web extraction for AI agents. Pass a permitted public URL and a plain-English prompt, get clean JSON or Markdown back. MCP-native, no-key demo, 1,000 free credits/month, and failed extractions do not burn credits.",
   "url": "https://github.com/Darko893/mcp-server",
   "npm": "https://www.npmjs.com/package/@hauntapi/mcp-server",
   "website": "https://hauntapi.com",
