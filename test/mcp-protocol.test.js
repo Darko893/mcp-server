@@ -9,7 +9,7 @@ test("tools/list exposes a no-key activation demo before paid extraction tools",
 
   assert.equal(names[0], "try_demo_extract");
   assert.ok(names.includes("extract"));
-  assert.ok(names.includes("extract_url"));
+  assert.ok(!names.includes("extract_url")); // hidden compat alias, still callable via handleToolCall
   assert.ok(names.includes("extract_markdown"));
   assert.ok(names.includes("get_usage"));
   assert.match(TOOLS[0].description, /no API key/i);
@@ -24,17 +24,16 @@ test("get_usage is discoverable as read-only account telemetry", () => {
   assert.match(usage.description, /reserved credits/i);
 });
 
-test("extract and extract_url expose markdown response format for agent workflows", () => {
+test("extract exposes markdown response format; extract_url is a hidden compat alias", () => {
   const extract = TOOLS.find((tool) => tool.name === "extract");
   assert.ok(extract);
-  const extractUrl = TOOLS.find((tool) => tool.name === "extract_url");
-  assert.ok(extractUrl);
   assert.deepEqual(
-    extractUrl.inputSchema.properties.response_format.enum,
+    extract.inputSchema.properties.response_format.enum,
     ["json", "markdown", "md", "raw_html", "html"]
   );
   assert.match(extract.description, /Markdown/i);
-  assert.match(extractUrl.description, /Markdown/i);
+  // extract_url is intentionally not advertised (removes agent ambiguity); still callable, see the signup-path test
+  assert.ok(!TOOLS.some((tool) => tool.name === "extract_url"));
 });
 
 test("extract_markdown is discoverable as a dedicated MCP tool", () => {

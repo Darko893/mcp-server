@@ -141,53 +141,7 @@ const TOOLS = [
   {
     name: "extract",
     description:
-      "Extract structured data from permitted public web pages by providing a URL and describing what you want. " +
-      "Returns clean JSON with exactly the fields you asked for by default. Can also return clean Markdown or raw HTML when response_format is set. " +
-      "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. It does not solve CAPTCHA, access login/paywall-only pages, or circumvent anti-bot controls. " +
-      "This is the general-purpose extraction tool and alias for extract_url. Use extract_markdown for LLM/RAG-ready Markdown, extract_article for full article content, or extract_metadata for page meta tags instead, they are optimised shortcuts. " +
-      "Read-only, makes no changes to any external system. Requires HAUNT_API_KEY environment variable. " +
-      "Free tier: 1,000 credits/month. Returns an error if rate limit, credit quota, or API key is invalid.",
-    inputSchema: {
-      type: "object",
-      properties: {
-        url: {
-          type: "string",
-          format: "uri",
-          description:
-            "The full URL of the page to extract data from. Must be a valid HTTP or HTTPS URL. " +
-            "Supports permitted public pages, including some JavaScript-heavy SPAs. Human-verification, login-required, CAPTCHA-gated, paywalled, and blocked pages return explicit errors rather than fabricated data.",
-        },
-        prompt: {
-          type: "string",
-          description:
-            "A plain-English description of what data to extract from the page. Be specific about which fields you want. " +
-            "Examples: 'product name, price, and availability', 'all email addresses and phone numbers', " +
-            "'the main heading, first paragraph, and all image URLs'. The more specific, the more accurate the extraction.",
-        },
-        response_format: {
-          type: "string",
-          enum: ["json", "markdown", "md", "raw_html", "html"],
-          description:
-            "Optional output mode. Leave blank or use json for structured extraction. Use markdown/md when you want clean page text for an agent, RAG pipeline, or .md file. Use raw_html/html only when you need the fetched HTML.",
-        },
-        device: {
-          type: "string",
-          enum: ["mobile", "desktop"],
-          description: "Optional. Render with a mobile or desktop browser profile (user agent and viewport). Forces browser rendering.",
-        },
-        js_scenario: {
-          type: "array",
-          items: { type: "object" },
-          description: "Paid plans only. Up to 10 scripted browser steps run before extraction. Each step is an object {action: wait|wait_for|click|scroll|fill}: wait needs ms, wait_for/click/fill need selector, scroll needs pixels, fill needs text.",
-        },
-      },
-      required: ["url", "prompt"],
-    },
-  },
-  {
-    name: "extract_url",
-    description:
-      "Extract structured data from permitted public web pages by providing a URL and describing what you want. " +
+      "Extract structured JSON from a permitted public URL using a plain-English prompt. When a page cannot be read Haunt returns an honest typed signal (blocked, login_required, captcha_required, not_found) instead of fabricated data, so your agent can react. Failed calls are free. " +
       "Returns clean JSON with exactly the fields you asked for by default. Can also return clean Markdown or raw HTML when response_format is set. " +
       "Uses supported fetch paths for JavaScript-heavy pages and returns explicit error signals when blocked. It does not solve CAPTCHA, access login/paywall-only pages, or circumvent anti-bot controls. " +
       "This is the general-purpose extraction tool. Use extract_markdown for LLM/RAG-ready Markdown, extract_article for full article content, or extract_metadata for page meta tags instead, they are optimised shortcuts. " +
@@ -451,6 +405,8 @@ function initializeResult(id, responseMode) {
       protocolVersion: "2025-06-18",
       capabilities: { tools: {} },
       serverInfo: { name: "haunt-api", version: PACKAGE_VERSION },
+      instructions:
+        "Haunt extracts structured data from public web pages. Send a URL and a plain-English prompt, get clean JSON, Markdown, or raw HTML. When a page is blocked, needs a login, or hits a captcha, Haunt returns a clear typed signal instead of fabricating data, so you can react. Try try_demo_extract free with no key, then set HAUNT_API_KEY and use extract. Failed calls are free.",
     },
   }, responseMode);
 }

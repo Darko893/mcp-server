@@ -6,12 +6,12 @@
     "url": "https://github.com/Darko893/mcp-server",
     "source": "github"
   },
-  "version": "1.0.23",
+  "version": "1.0.24",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@hauntapi/mcp-server",
-      "version": "1.0.23",
+      "version": "1.0.24",
       "transport": {
         "type": "stdio"
       },
