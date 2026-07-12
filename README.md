@@ -1,10 +1,12 @@
-# Haunt API MCP Server
+# Haunt MCP Server: web extraction for AI agents
 
-This is the canonical public MCP package working tree for `@hauntapi/mcp-server` and GitHub `Darko893/mcp-server`. The live Haunt API app/site lives separately in `/root/haunt`. Do not confuse this with `/root/haunt/mcp-server`, which is a legacy/local copy inside the app repo.
+[![npm](https://img.shields.io/npm/v/@hauntapi/mcp-server)](https://www.npmjs.com/package/@hauntapi/mcp-server)
+[![Glama score](https://glama.ai/mcp/servers/Darko893/mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/Darko893/mcp-server)
+[![MCP Registry](https://img.shields.io/badge/MCP-registry-1f6feb)](https://registry.modelcontextprotocol.io)
 
-Give Claude, Cursor, Windsurf, and other MCP-compatible agents a clean web extraction tool.
+Give Claude, Cursor, Windsurf, and any MCP-compatible agent a clean web-extraction tool: turn any permitted public web page into structured JSON, or clean Markdown, from a plain-language prompt. When a page is blocked, login-walled, or too thin to trust, Haunt returns an honest machine-readable failure instead of fabricated data.
 
-Haunt turns permitted public web pages into structured JSON using natural-language prompts. It can also return clean Markdown for agents, RAG pipelines, notes, and `.md` files when you need page text instead of typed fields. It is built for agent workflows that need product data, competitor pricing, article content, metadata, lead lists, research snippets, Markdown page text, or other visible web data without maintaining brittle selectors.
+Built for agent workflows that need product data, competitor prices, article text, page metadata, lead lists, or research snippets, without maintaining brittle CSS selectors. Try it with **no API key** using the `try_demo_extract` tool.
 
 ## Quick Start
 
