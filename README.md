@@ -1,12 +1,22 @@
-# Haunt MCP Server: web extraction for AI agents
+<div align="center">
 
-[![npm](https://img.shields.io/npm/v/@hauntapi/mcp-server)](https://www.npmjs.com/package/@hauntapi/mcp-server)
+<img src="https://hauntapi.com/favicon-192x192.png" width="76" alt="Haunt" />
+
+# Haunt MCP Server
+
+**Web extraction for AI agents.** Give Claude, Cursor, Windsurf, or any MCP client a clean tool that turns any permitted public web page into structured JSON or Markdown from a plain-language prompt, and returns an honest machine-readable failure instead of fabricated data when a page is blocked.
+
+[![npm](https://img.shields.io/npm/v/@hauntapi/mcp-server?color=1f6feb)](https://www.npmjs.com/package/@hauntapi/mcp-server)
 [![Glama score](https://glama.ai/mcp/servers/Darko893/mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/Darko893/mcp-server)
 [![MCP Registry](https://img.shields.io/badge/MCP-registry-1f6feb)](https://registry.modelcontextprotocol.io)
 
-Give Claude, Cursor, Windsurf, and any MCP-compatible agent a clean web-extraction tool: turn any permitted public web page into structured JSON, or clean Markdown, from a plain-language prompt. When a page is blocked, login-walled, or too thin to trust, Haunt returns an honest machine-readable failure instead of fabricated data.
+[Website](https://hauntapi.com) &middot; [Docs](https://hauntapi.com/docs) &middot; [Get a free key](https://hauntapi.com/#signup) &middot; [Python SDK](https://github.com/Darko893/hauntapi-python)
 
-Built for agent workflows that need product data, competitor prices, article text, page metadata, lead lists, or research snippets, without maintaining brittle CSS selectors. Try it with **no API key** using the `try_demo_extract` tool.
+</div>
+
+---
+
+Built for agent workflows that need product data, competitor prices, article text, page metadata, lead lists, or research snippets, without brittle CSS selectors. Try it with **no API key** using the `try_demo_extract` tool. Free tier: 1,000 credits a month, no card.
 
 ## Quick Start
 
