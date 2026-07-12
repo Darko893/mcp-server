@@ -10,7 +10,7 @@
 [![Glama score](https://glama.ai/mcp/servers/Darko893/mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/Darko893/mcp-server)
 [![MCP Registry](https://img.shields.io/badge/MCP-registry-1f6feb)](https://registry.modelcontextprotocol.io)
 
-[Website](https://hauntapi.com) &middot; [Docs](https://hauntapi.com/docs) &middot; [Get a free key](https://hauntapi.com/#signup) &middot; [Python SDK](https://github.com/Darko893/hauntapi-python)
+[Website](https://hauntapi.com) &middot; [Docs](https://hauntapi.com/docs) &middot; [Get a free key](https://hauntapi.com/?utm_source=github&utm_medium=readme&utm_campaign=mcp_server#signup) &middot; [Python SDK](https://github.com/Darko893/hauntapi-python)
 
 </div>
 
@@ -46,7 +46,7 @@ Use Haunt's try_demo_extract tool and show me the signup and docs links.
 
 ### 2. Add a free API key for live extraction
 
-Get a free API key: https://hauntapi.com/#signup
+Get a free API key: https://hauntapi.com/?utm_source=github&utm_medium=readme&utm_campaign=mcp_server#signup
 
 Add this to your MCP client config:
 
@@ -146,5 +146,5 @@ Upgrade: https://hauntapi.com/#pricing
 
 - Website: https://hauntapi.com
 - Docs: https://hauntapi.com/docs
-- Get API key: https://hauntapi.com/#signup
+- Get API key: https://hauntapi.com/?utm_source=github&utm_medium=readme&utm_campaign=mcp_server#signup
 - GitHub: https://github.com/Darko893/mcp-server
